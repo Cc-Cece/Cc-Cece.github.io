@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- 必要参数 -->
+<meta charset="utf-8"/>
+<title>关于 | Cc_cece</title>
+<meta name="keywords" content="关键词"/>
+<meta name="description" content="简述"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable:no"/>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<link rel="shortcut icon" href="favicon.ico">
+<!-- CSS -->
+<link rel="stylesheet" href="https://cc.akihito.dpdns.org/media/css/mdui.min.css">
+<link rel="stylesheet" href="https://cc.akihito.dpdns.org/media/css/modify.css">
+<link rel="stylesheet" href="https://cc.akihito.dpdns.org/media/css/github-gist.min.css">
+<link rel="stylesheet" href="https://cc.akihito.dpdns.org/media/css/railscasts.min.css">
+<style>
+
+
+.toc-container {
+    position: fixed;
+    top: 80px;
+    right: 50px;
+    bottom: 60px; 
+    width: 260px;
+    padding: 16px;
+    overflow-y: auto;
+    border-radius: 4px;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    scrollbar-width: none; /* Firefox 隐藏滚动条 */
+    -ms-overflow-style: none; /* IE/Edge 隐藏滚动条 */
+}
+
+.toc-container::-webkit-scrollbar {
+    display: none;
+}
+
+body:not(.mdui-theme-layout-dark) .toc-container {
+    background-color: #fff;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+body.mdui-theme-layout-dark .toc-container {
+    background-color: #424242;
+    color: rgba(255, 255, 255, 0.87);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.toc-container ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-container ul li a {
+    display: block;
+    padding: 6px 0;
+    font-size: 0.95em;
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+}
+
+body:not(.mdui-theme-layout-dark) .toc-container ul li a {
+    color: rgba(0, 0, 0, 0.6);
+}
+body:not(.mdui-theme-layout-dark) .toc-container ul li a:hover,
+body:not(.mdui-theme-layout-dark) .toc-container ul li a.active {
+    color: #2196F3;
+    font-weight: bold;
+}
+
+body.mdui-theme-layout-dark .toc-container ul li a {
+    color: rgba(255, 255, 255, 0.6);
+}
+body.mdui-theme-layout-dark .toc-container ul li a:hover,
+body.mdui-theme-layout-dark .toc-container ul li a.active {
+    color: #90CAF9;
+    font-weight: bold;
+}
+
+.toc-container ul ul {
+    margin-left: 15px;
+    border-left: 1px solid rgba(0,0,0,0.12);
+    padding-left: 5px;
+}
+body.mdui-theme-layout-dark .toc-container ul ul {
+    border-left: 1px solid rgba(255,255,255,0.12);
+}
+
+@media screen and (max-width: 900px) {
+    .toc-container { display: none !important; }
+}
+</style>
+</head>
+<body id="post" class="mdui-appbar-with-toolbar mdui-theme-primary-blue-grey mdui-theme-accent-blue mdui-loaded mdui-theme-layout-dark">
+<header role="banner">
+    <div class="mdui-appbar mdui-appbar-fixed mdui-appbar-scroll-hide mdui-shadow-0">
+        <div class="mdui-toolbar">
+            <button class="mdui-btn mdui-btn-icon" id="menu" mdui-drawer="{target:'#drawer',overlay:true,swipe:true}"><i class="mdui-icon material-icons">menu</i></button>
+            <a href="https://cc.akihito.dpdns.org" class="mdui-typo-headline">Cc_cece</a>
+            <div class="mdui-toolbar-spacer"></div>
+            <button class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '深色样式切换', position: 'left'}" id="DarkStyle"><i class="mdui-icon material-icons">brightness_4</i></button>
+        </div>
+    </div>
+</header>
+
+<nav id="drawer" class="mdui-drawer mdui-drawer-full-height mdui-drawer-close">
+    <ul class="mdui-list">
+        <a href="/" class="menu"><li class="mdui-list-item mdui-ripple">首页</li></a>
+        <a href="/archives" class="menu"><li class="mdui-list-item mdui-ripple">归档</li></a>
+        <a href="/tags" class="menu"><li class="mdui-list-item mdui-ripple">标签</li></a>
+        <a href="/post/about" class="menu"><li class="mdui-list-item mdui-ripple">关于</li></a>
+        
+        <a href="https://github.com/CPlayer-CN/gridea-theme-cplayer-material" class="spread"><li class="mdui-list-item mdui-ripple">主题主页</li></a>
+    </ul>
+</nav>
+
+
+<main class="mdui-container mdui-typo mdui-m-t-2">
+    <div class="mdui-row">
+        <div class="main-content-col mdui-col-md-9">
+            <section class="mdui-card">
+                
+                <div class="mdui-card-primary">
+                    <div class="mdui-card-primary-title">关于</div>
+                    <div class="mdui-card-primary-subtitle">
+                        发布于 2019-01-25，包含标签 
+                        
+                    </div>
+                </div>
+                <div class="mdui-card-content" id="post-content"><blockquote>
+<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
+</blockquote>
+<h2 id="关于本站">🏠 关于本站</h2>
+<h2 id="博主是谁">👨‍💻 博主是谁</h2>
+<h2 id="兴趣爱好">⛹ 兴趣爱好</h2>
+<h2 id="联系我呀">📬 联系我呀</h2>
+</div>
+                <div class="mdui-card-header">
+                    <img class="mdui-card-header-avatar" src="https://cc.akihito.dpdns.org/images/avatar.png">
+                    <div class="mdui-card-header-title">Cc_cece</div>
+                    <div class="mdui-card-header-subtitle">其作始也简，其将毕也必巨。</div>
+                </div>
+            </section>
+
+            
+                
+                    <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css">
+<script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
+
+<div id="disqus_thread"></div>
+
+<script>
+
+var options = {
+  shortname: 'cc-cece',
+  apikey: 'on0EX3tp5dOXwH5PRzPo4C4pUvJglYkoQ7RnuuyA6C1rwEWdDWoW3eEONSFTOoCY',
+}
+if ('https://disqus.skk.moe/disqus/') {
+  options.api = 'https://disqus.skk.moe/disqus/'
+}
+var dsqjs = new DisqusJS(options)
+
+</script>
+
+                
+            
+        </div>
+
+        
+        <div class="toc-col mdui-hidden-sm-down">
+            <div class="toc-container">
+                <div class="mdui-typo-subheading-opacity mdui-p-b-1">目录</div>
+                
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99">🏠 关于本站</a></li>
+<li><a href="#%E5%8D%9A%E4%B8%BB%E6%98%AF%E8%B0%81">👨‍💻 博主是谁</a></li>
+<li><a href="#%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD">⛹ 兴趣爱好</a></li>
+<li><a href="#%E8%81%94%E7%B3%BB%E6%88%91%E5%91%80">📬 联系我呀</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
+        
+    </div>
+</main>
+
+<nav class="mdui-container mdui-m-t-2 mdui-m-b-2">
+    
+    
+</nav>
+
+<div class="mdui-m-t-2 mdui-text-center mdui-typo">
+    
+</div>
+
+<script src="https://cc.akihito.dpdns.org/media/js/jquery.min.js"></script>
+<script src="https://cc.akihito.dpdns.org/media/js/mdui.min.js"></script>
+<script src="https://cc.akihito.dpdns.org/media/js/modify.js"></script>
+<script src="https://cc.akihito.dpdns.org/media/js/highlight.min.js"></script>
+<script src="https://cc.akihito.dpdns.org/media/js/lightense.min.js"></script>
+<script>
+
+hljs.initHighlightingOnLoad();
+
+window.addEventListener('load', function () {
+    Lightense('#post .mdui-card-content img');
+
+    const tocContainer = document.querySelector('.toc-container');
+    if (tocContainer) {
+        tocContainer.querySelectorAll('a').forEach(link => link.removeAttribute('target'));
+    }
+
+    const postContent = document.getElementById('post-content');
+    const headings = postContent ? postContent.querySelectorAll('h1,h2,h3,h4,h5,h6') : [];
+    const tocLinks = tocContainer ? tocContainer.querySelectorAll('a') : [];
+
+    function highlightTocLink() {
+        let current = null;
+        const viewportHeight = window.innerHeight;
+        for (let i = 0; i < headings.length; i++) {
+            const rect = headings[i].getBoundingClientRect();
+            if (rect.top >= 0 && rect.top <= viewportHeight * 0.5) {
+                current = headings[i];
+            }
+        }
+        if (!current) return;
+
+        const id = current.id;
+        tocLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+        });
+
+        const activeLink = Array.from(tocLinks).find(link => link.classList.contains('active'));
+        if (activeLink && tocContainer) {
+            const linkRect = activeLink.getBoundingClientRect();
+            const containerRect = tocContainer.getBoundingClientRect();
+            if (linkRect.top < containerRect.top || linkRect.bottom > containerRect.bottom) {
+                tocContainer.scrollTop += linkRect.top - containerRect.top - containerRect.height / 2 + linkRect.height / 2;
+            }
+        }
+    }
+
+    highlightTocLink();
+    window.addEventListener('scroll', highlightTocLink);
+});
+const commentArea = document.getElementById('disqus_thread');
+const tocBox = document.querySelector('.toc-container');
+
+if (commentArea && tocBox) {
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          tocBox.style.display = 'none';
+        } else {
+          tocBox.style.display = '';
+        }
+      });
+    },
+    { root: null, threshold: 0.8} 
+  );
+  observer.observe(commentArea);
+}
+</script>
+</body>
+</html>
