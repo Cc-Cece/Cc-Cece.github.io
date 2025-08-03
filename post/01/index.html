@@ -1,0 +1,452 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Minecraft and QQ group server interconnection tutorial | Ceceport&#39;s Blog</title>
+<link rel="shortcut icon" href="https://cc.akihito.dpdns.org/favicon.ico?v=1754228826248">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cc.akihito.dpdns.org/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Minecraft and QQ group server interconnection tutorial | Ceceport&#39;s Blog - Atom Feed" href="https://cc.akihito.dpdns.org/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="Are you still envious of Discord and Telegram bots? Are you still annoyed that you need a VPN to use them? Now, a server..." />
+    <meta name="keywords" content="Server,MCbot,Minecraft" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://cc.akihito.dpdns.org">
+    <img class="avatar header-face-logo" src="https://nmsr.nickac.dev/face/Ceceport" alt="">
+  </a>
+  <div class="header-text">
+    <h1 class="site-title">
+      Ceceport&#39;s Blog
+    </h1>
+    <p class="site-description tagline">
+      How is this working at all?!
+    </p>
+  </div>
+  <p></p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          Home
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          Archives
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          About
+        </a>
+      
+    
+  </div>
+  <p></p>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/Cc-Cece" target="_blank">
+          <i class="ri-github-line"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Minecraft and QQ group server interconnection tutorial
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-08-02
+              </span>
+              <span>
+                5 min read
+              </span>
+              
+                <a href="https://cc.akihito.dpdns.org/tag/znUkyMoSDj/" class="post-tag">
+                  # Server
+                </a>
+              
+                <a href="https://cc.akihito.dpdns.org/tag/qT9oEMMi-Ps/" class="post-tag">
+                  # MCbot
+                </a>
+              
+                <a href="https://cc.akihito.dpdns.org/tag/jV5twjbHxL/" class="post-tag">
+                  # Minecraft
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p>Are you still envious of Discord and Telegram bots? Are you still annoyed that you need a VPN to use them? Now, a server-to-chat connection bot based on Forge and Fabric is here.</p>
+<!-- more -->
+<h2 id="1-introduction">1. Introduction</h2>
+<ul>
+<li>This mod is different from plugin-based server-to-chat connections, making it a good choice for server owners who don't want to deal with plugins.</li>
+</ul>
+<hr>
+<h2 id="2-note">2. Note</h2>
+<p>This mod has more than one tutorial. This one is for the <strong><a href="https://www.google.com/search?q=https://link.mcmod.cn/target/aHR0cHM6Ly9naXRodWIuY29tL0xhZ3JhbmdlRGV2L0xhZ3JhbmdlLkNvcmU%3D">Lagrange</a></strong> protocol. If you are looking for a tutorial for another protocol, you can skip this one.</p>
+<hr>
+<h2 id="3-preparation">3. Preparation</h2>
+<ul>
+<li>A QQ account (a secondary account with low value is recommended)</li>
+<li>The <strong><a href="https://github.com/LagrangeDev/Lagrange.Core/releases">Lagrange version</a></strong> that is compatible with your device</li>
+<li>The <strong><a href="https://github.com/Nova-Committee/McBot/releases">mod files</a></strong> for your Minecraft version</li>
+</ul>
+<p><strong>Expand version selection tips</strong></p>
+<table>
+<thead>
+<tr>
+<th>Lagrange.Core Selection:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x64</code>: Based on the <code>x86_64</code> architecture (i.e., common 64-bit <code>Intel</code> or <code>AMD</code> processors)</td>
+</tr>
+<tr>
+<td><code>arm64</code>: <code>ARM64</code> architecture</td>
+</tr>
+<tr>
+<td><code>arm</code>: 32-bit <code>ARM</code> architecture</td>
+</tr>
+<tr>
+<td><strong>Normal Linux environment</strong>: Choose a version that does not contain <code>musl</code></td>
+</tr>
+<tr>
+<td><strong>musl</strong>: Linux system based on <code>musl</code> (e.g., Alpine Linux)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Mod File Selection</strong></p>
+<p>Please choose based on your mod loader and game version. A <strong>Special Note: If the version from releases has a clear bug, it is likely not your fault. Please get the corrected version.</strong></p>
+<hr>
+<h2 id="4-tutorial">4. Tutorial</h2>
+<h3 id="1-configure-lagrange">1. Configure Lagrange</h3>
+<table>
+<thead>
+<tr>
+<th>Windows</th>
+<th>Linux/macOS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Double-click <code>Lagrange.OneBot.exe</code> to run.</td>
+<td>Run the following commands: <code>chmod +x ./Lagrange.OneBot</code> and then <code>./Lagrange.OneBot</code></td>
+</tr>
+</tbody>
+</table>
+<p>The first time you run it, a default <code>appsettings.json</code> configuration file will be automatically generated in the same directory. You need to correctly modify the file to set up Lagrange.</p>
+<p>After modifying the configuration file as needed (using QR code login is recommended), press any key in the command line. Lagrange will officially run, and a login QR code image <code>qr-0.png</code> will appear in the same folder. Scan it with your mobile QQ as soon as possible before it expires.</p>
+<p><strong>Expand configuration modification tips</strong></p>
+<p>Please read the comments and highlighted content carefully.</p>
+<pre><code class="language-json">{
+  &quot;Logging&quot;: {
+    &quot;LogLevel&quot;: {
+      &quot;Default&quot;: &quot;Information&quot;,  // Switch to Trace when reporting an Issue
+      &quot;Microsoft&quot;: &quot;Warning&quot;,
+      &quot;Microsoft.Hosting.Lifetime&quot;: &quot;Information&quot;,
+    },
+  },
+  &quot;SignServerUrl&quot;: &quot;https://sign.lagrangecore.org/api/sign&quot;,
+  &quot;MusicSignServerUrl&quot;: &quot;&quot;,
+  &quot;Account&quot;: {
+    &quot;Uin&quot;: 0,  // Fill in 0 for Uin to use QR code connection
+    &quot;Password&quot;: &quot;&quot;,  // Do not fill in a password to use QR code connection
+    &quot;Protocol&quot;: &quot;Linux&quot;, // Use Linux protocol
+    &quot;AutoReconnect&quot;: true,
+    &quot;GetOptimumServer&quot;: true,
+  },
+  &quot;Message&quot;: {
+    &quot;IgnoreSelf&quot;: true, // Ignore the bot's own messages
+    &quot;StringPost&quot;: false,
+  },
+  &quot;QrCode&quot;: {
+    &quot;ConsoleCompatibilityMode&quot;: false,
+  },
+  &quot;Implementations&quot;: [  // Service implementations, multiple connections are supported
+    {
+      &quot;Type&quot;: &quot;ReverseWebSocket&quot;,
+      &quot;Host&quot;: &quot;127.0.0.1&quot;,
+      &quot;Port&quot;: 8080,
+      &quot;Suffix&quot;: &quot;/onebot/v11/ws&quot;,
+      &quot;ReconnectInterval&quot;: 5000,
+      &quot;HeartBeatInterval&quot;: 5000,
+      &quot;HeartBeatEnable&quot;: true,
+      &quot;AccessToken&quot;: &quot;&quot;,
+    },
+    {
+      &quot;Type&quot;: &quot;ForwardWebSocket&quot;,
+      &quot;Host&quot;: &quot;127.0.0.1&quot;,
+      &quot;Port&quot;: 8081, // Set the port you have opened (both TCP and UDP protocols need to be open)
+      &quot;HeartBeatInterval&quot;: 5000,
+      &quot;HeartBeatEnable&quot;: true,
+      &quot;AccessToken&quot;: &quot;&quot;,
+    } // If your config file does not have this section, please add it manually
+  ],
+}
+</code></pre>
+<p><strong>Note:</strong> Lines starting with <code>//</code> are comments. Be sure to delete them if you copy and paste them into the actual config file.</p>
+<h3 id="2-configure-the-mod">2. Configure the mod</h3>
+<ol>
+<li>
+<p>First, move the mod file to your server's <code>mods</code> folder (running environment: ineffective on the client, required on the server).</p>
+</li>
+<li>
+<p>Start your server for the first time to let the mod generate its configuration file. Then shut down the server.</p>
+</li>
+<li>
+<p>Open the <code>mcbot</code> folder in the server's root directory, find the <code>config.toml</code> file, and open it.</p>
+</li>
+<li>
+<p>Check if the following items are correct (refer to the comments for others):</p>
+</li>
+</ol>
+<!-- end list -->
+<ul>
+<li><code>group-id-list = [12345,22344,66789]</code> <strong># Supports multiple QQ groups, separated by a comma.</strong></li>
+<li><code>url = “ws://127.0.0.1:5140”</code> <strong># Address and port number. Please ensure it matches your Lagrange settings.</strong></li>
+<li><code>bot-id = 100023</code> <strong># Bot's QQ number.</strong></li>
+</ul>
+<!-- end list -->
+<ol start="5">
+<li>Restart the server and check if it is running correctly.</li>
+</ol>
+<p>The following text indicates a successful launch: <code>[INFO] McBot: McBot is now running!</code></p>
+<hr>
+<h2 id="5-feedback">5. Feedback</h2>
+<p><strong>If you have any questions or suggestions, please leave a message or contact me.</strong></p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#1-introduction">1. Introduction</a></li>
+<li><a href="#2-note">2. Note</a></li>
+<li><a href="#3-preparation">3. Preparation</a></li>
+<li><a href="#4-tutorial">4. Tutorial</a>
+<ul>
+<li><a href="#1-configure-lagrange">1. Configure Lagrange</a></li>
+<li><a href="#2-configure-the-mod">2. Configure the mod</a></li>
+</ul>
+</li>
+<li><a href="#5-feedback">5. Feedback</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+
+        
+          
+
+          
+            <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css">
+<script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
+
+<div id="disqus_thread"></div>
+
+<script>
+
+var options = {
+  shortname: 'cc-cece',
+  apikey: 'on0EX3tp5dOXwH5PRzPo4C4pUvJglYkoQ7RnuuyA6C1rwEWdDWoW3eEONSFTOoCY',
+}
+if ('https://disqus.skk.moe/disqus/') {
+  options.api = 'https://disqus.skk.moe/disqus/'
+}
+var dsqjs = new DisqusJS(options)
+
+</script>
+
+          
+        
+
+        <div class="site-footer">
+  
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          Home
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          Archives
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          About
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/Cc-Cece" target="_blank">
+          <i class="ri-github-line"></i>
+        </a>
+      
+    
+      
+    
+      
+        <a href="https://discord.gg/WFrNd95j" target="_blank">
+          <i class="ri-discord-line"></i>
+        </a>
+      
+    
+      
+        <a href="mailto:suyu041219@gmail.com?subject=From Ceceport&#39;s Blog" target="_blank">
+          <i class="ri-mail-line"></i>
+        </a>
+      
+    
+      
+    
+  </div>
+  <a class="rss" href="https://cc.akihito.dpdns.org/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+<script>
+  // 初始化代码高亮
+  hljs.initHighlightingOnLoad();
+
+  // --- 动态包裹代码块和添加按钮 ---
+  document.querySelectorAll('pre code').forEach(codeBlock => {
+    const container = document.createElement('div');
+    container.className = 'code-container';
+
+    const button = document.createElement('button');
+    button.className = 'copy-button';
+    button.textContent = 'copy';
+
+    codeBlock.parentNode.insertBefore(container, codeBlock);
+    container.appendChild(codeBlock);
+    container.appendChild(button);
+  });
+
+  // --- 复制按钮功能 ---
+  document.querySelectorAll('.copy-button').forEach(copyButton => {
+    copyButton.addEventListener('click', () => {
+      const codeBlock = copyButton.parentNode.querySelector('code');
+      if (codeBlock) {
+        navigator.clipboard.writeText(codeBlock.innerText).then(() => {
+          const originalText = copyButton.textContent;
+          copyButton.textContent = 'copied!';
+          setTimeout(() => {
+            copyButton.textContent = originalText;
+          }, 2000);
+        }).catch(err => {
+          console.error('failed:', err);
+          copyButton.textContent = 'failed!';
+        });
+      }
+    });
+  });
+
+  // --- Ctrl + A 全选代码块功能 (最终版) ---
+  document.addEventListener('keydown', (event) => {
+    // 检查是否按下了 Ctrl/Cmd + A
+    if ((event.ctrlKey || event.metaKey) && (event.key === 'a' || event.key === 'A')) {
+      const selection = window.getSelection();
+      
+      // 检查是否有选中的内容，并且选中的内容在 <code> 标签内
+      if (selection.rangeCount > 0) {
+        const range = selection.getRangeAt(0);
+        const codeBlockParent = range.commonAncestorContainer;
+
+        // 向上遍历父元素，直到找到 <code> 标签
+        let targetCodeBlock = null;
+        let element = codeBlockParent;
+        while (element) {
+          if (element.tagName === 'CODE') {
+            targetCodeBlock = element;
+            break;
+          }
+          element = element.parentElement;
+        }
+
+        if (targetCodeBlock) {
+          event.preventDefault(); // 阻止浏览器默认的全选行为
+
+          // 重新全选该代码块的内容
+          const newRange = document.createRange();
+          newRange.selectNodeContents(targetCodeBlock);
+          
+          selection.removeAllRanges();
+          selection.addRange(newRange);
+        }
+      }
+    }
+  });
+
+  // 原有的 TOC 滚动高亮逻辑
+  let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+  window.addEventListener("scroll", event => {
+    let fromTop = window.scrollY;
+    mainNavLinks.forEach((link, index) => {
+      let section = document.getElementById(decodeURI(link.hash).substring(1));
+      let nextSection = null
+      if (mainNavLinks[index + 1]) {
+        nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+      }
+      if (section.offsetTop <= fromTop) {
+        if (nextSection) {
+          if (nextSection.offsetTop > fromTop) {
+            link.classList.add("current");
+          } else {
+            link.classList.remove("current");    
+          }
+        } else {
+          link.classList.add("current");
+        }
+      } else {
+        link.classList.remove("current");
+      }
+    });
+  });
+</script>
+  </body>
+</html>

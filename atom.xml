@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://cc.akihito.dpdns.org</id>
+    <title>Ceceport&apos;s Blog</title>
+    <updated>2025-08-03T13:51:18.040Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://cc.akihito.dpdns.org"/>
+    <link rel="self" href="https://cc.akihito.dpdns.org/atom.xml"/>
+    <subtitle>How is this working at all?!</subtitle>
+    <logo>https://cc.akihito.dpdns.org/images/avatar.png</logo>
+    <icon>https://cc.akihito.dpdns.org/favicon.ico</icon>
+    <rights>All rights reserved 2025, Ceceport&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[Minecraft and QQ group server interconnection tutorial]]></title>
+        <id>https://cc.akihito.dpdns.org/post/01/</id>
+        <link href="https://cc.akihito.dpdns.org/post/01/">
+        </link>
+        <updated>2022-08-01T16:35:16.000Z</updated>
+        <summary type="html"><![CDATA[<p>Are you still envious of Discord and Telegram bots? Are you still annoyed that you need a VPN to use them? Now, a server-to-chat connection bot based on Forge and Fabric is here.</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>Are you still envious of Discord and Telegram bots? Are you still annoyed that you need a VPN to use them? Now, a server-to-chat connection bot based on Forge and Fabric is here.</p>
+<!-- more -->
+<h2 id="1-introduction">1. Introduction</h2>
+<ul>
+<li>This mod is different from plugin-based server-to-chat connections, making it a good choice for server owners who don't want to deal with plugins.</li>
+</ul>
+<hr>
+<h2 id="2-note">2. Note</h2>
+<p>This mod has more than one tutorial. This one is for the <strong><a href="https://www.google.com/search?q=https://link.mcmod.cn/target/aHR0cHM6Ly9naXRodWIuY29tL0xhZ3JhbmdlRGV2L0xhZ3JhbmdlLkNvcmU%3D">Lagrange</a></strong> protocol. If you are looking for a tutorial for another protocol, you can skip this one.</p>
+<hr>
+<h2 id="3-preparation">3. Preparation</h2>
+<ul>
+<li>A QQ account (a secondary account with low value is recommended)</li>
+<li>The <strong><a href="https://github.com/LagrangeDev/Lagrange.Core/releases">Lagrange version</a></strong> that is compatible with your device</li>
+<li>The <strong><a href="https://github.com/Nova-Committee/McBot/releases">mod files</a></strong> for your Minecraft version</li>
+</ul>
+<p><strong>Expand version selection tips</strong></p>
+<table>
+<thead>
+<tr>
+<th>Lagrange.Core Selection:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x64</code>: Based on the <code>x86_64</code> architecture (i.e., common 64-bit <code>Intel</code> or <code>AMD</code> processors)</td>
+</tr>
+<tr>
+<td><code>arm64</code>: <code>ARM64</code> architecture</td>
+</tr>
+<tr>
+<td><code>arm</code>: 32-bit <code>ARM</code> architecture</td>
+</tr>
+<tr>
+<td><strong>Normal Linux environment</strong>: Choose a version that does not contain <code>musl</code></td>
+</tr>
+<tr>
+<td><strong>musl</strong>: Linux system based on <code>musl</code> (e.g., Alpine Linux)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Mod File Selection</strong></p>
+<p>Please choose based on your mod loader and game version. A <strong>Special Note: If the version from releases has a clear bug, it is likely not your fault. Please get the corrected version.</strong></p>
+<hr>
+<h2 id="4-tutorial">4. Tutorial</h2>
+<h3 id="1-configure-lagrange">1. Configure Lagrange</h3>
+<table>
+<thead>
+<tr>
+<th>Windows</th>
+<th>Linux/macOS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Double-click <code>Lagrange.OneBot.exe</code> to run.</td>
+<td>Run the following commands: <code>chmod +x ./Lagrange.OneBot</code> and then <code>./Lagrange.OneBot</code></td>
+</tr>
+</tbody>
+</table>
+<p>The first time you run it, a default <code>appsettings.json</code> configuration file will be automatically generated in the same directory. You need to correctly modify the file to set up Lagrange.</p>
+<p>After modifying the configuration file as needed (using QR code login is recommended), press any key in the command line. Lagrange will officially run, and a login QR code image <code>qr-0.png</code> will appear in the same folder. Scan it with your mobile QQ as soon as possible before it expires.</p>
+<p><strong>Expand configuration modification tips</strong></p>
+<p>Please read the comments and highlighted content carefully.</p>
+<pre><code class="language-json">{
+  &quot;Logging&quot;: {
+    &quot;LogLevel&quot;: {
+      &quot;Default&quot;: &quot;Information&quot;,  // Switch to Trace when reporting an Issue
+      &quot;Microsoft&quot;: &quot;Warning&quot;,
+      &quot;Microsoft.Hosting.Lifetime&quot;: &quot;Information&quot;,
+    },
+  },
+  &quot;SignServerUrl&quot;: &quot;https://sign.lagrangecore.org/api/sign&quot;,
+  &quot;MusicSignServerUrl&quot;: &quot;&quot;,
+  &quot;Account&quot;: {
+    &quot;Uin&quot;: 0,  // Fill in 0 for Uin to use QR code connection
+    &quot;Password&quot;: &quot;&quot;,  // Do not fill in a password to use QR code connection
+    &quot;Protocol&quot;: &quot;Linux&quot;, // Use Linux protocol
+    &quot;AutoReconnect&quot;: true,
+    &quot;GetOptimumServer&quot;: true,
+  },
+  &quot;Message&quot;: {
+    &quot;IgnoreSelf&quot;: true, // Ignore the bot's own messages
+    &quot;StringPost&quot;: false,
+  },
+  &quot;QrCode&quot;: {
+    &quot;ConsoleCompatibilityMode&quot;: false,
+  },
+  &quot;Implementations&quot;: [  // Service implementations, multiple connections are supported
+    {
+      &quot;Type&quot;: &quot;ReverseWebSocket&quot;,
+      &quot;Host&quot;: &quot;127.0.0.1&quot;,
+      &quot;Port&quot;: 8080,
+      &quot;Suffix&quot;: &quot;/onebot/v11/ws&quot;,
+      &quot;ReconnectInterval&quot;: 5000,
+      &quot;HeartBeatInterval&quot;: 5000,
+      &quot;HeartBeatEnable&quot;: true,
+      &quot;AccessToken&quot;: &quot;&quot;,
+    },
+    {
+      &quot;Type&quot;: &quot;ForwardWebSocket&quot;,
+      &quot;Host&quot;: &quot;127.0.0.1&quot;,
+      &quot;Port&quot;: 8081, // Set the port you have opened (both TCP and UDP protocols need to be open)
+      &quot;HeartBeatInterval&quot;: 5000,
+      &quot;HeartBeatEnable&quot;: true,
+      &quot;AccessToken&quot;: &quot;&quot;,
+    } // If your config file does not have this section, please add it manually
+  ],
+}
+</code></pre>
+<p><strong>Note:</strong> Lines starting with <code>//</code> are comments. Be sure to delete them if you copy and paste them into the actual config file.</p>
+<h3 id="2-configure-the-mod">2. Configure the mod</h3>
+<ol>
+<li>
+<p>First, move the mod file to your server's <code>mods</code> folder (running environment: ineffective on the client, required on the server).</p>
+</li>
+<li>
+<p>Start your server for the first time to let the mod generate its configuration file. Then shut down the server.</p>
+</li>
+<li>
+<p>Open the <code>mcbot</code> folder in the server's root directory, find the <code>config.toml</code> file, and open it.</p>
+</li>
+<li>
+<p>Check if the following items are correct (refer to the comments for others):</p>
+</li>
+</ol>
+<!-- end list -->
+<ul>
+<li><code>group-id-list = [12345,22344,66789]</code> <strong># Supports multiple QQ groups, separated by a comma.</strong></li>
+<li><code>url = “ws://127.0.0.1:5140”</code> <strong># Address and port number. Please ensure it matches your Lagrange settings.</strong></li>
+<li><code>bot-id = 100023</code> <strong># Bot's QQ number.</strong></li>
+</ul>
+<!-- end list -->
+<ol start="5">
+<li>Restart the server and check if it is running correctly.</li>
+</ol>
+<p>The following text indicates a successful launch: <code>[INFO] McBot: McBot is now running!</code></p>
+<hr>
+<h2 id="5-feedback">5. Feedback</h2>
+<p><strong>If you have any questions or suggestions, please leave a message or contact me.</strong></p>
+]]></content>
+    </entry>
+</feed>
