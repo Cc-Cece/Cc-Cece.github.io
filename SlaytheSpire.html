@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">应用下载</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            flex-direction: column; 
+            transition: background-color 0.3s ease;
+        }
+
+        body.dark {
+            background-color: #1f2937;
+        }
+        
+        body:not(.dark) {
+            background-color: #f3f4f6;
+        }
+
+        #qrcode-container img, #qrcode-container canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900">
+
+<div class="fixed top-4 right-4 z-50">
+    <button id="theme-toggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 shadow-md focus:outline-none transition-colors duration-300">
+        <svg id="sun-icon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+        <svg id="moon-icon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+    </button>
+</div>
+
+<div class="bg-white dark:bg-gray-800 p-8 sm:p-12 rounded-3xl shadow-2xl w-full max-w-sm sm:max-w-4xl flex flex-col sm:flex-row items-center sm:items-start sm:justify-center sm:gap-12 transition-colors duration-300">
+    
+        <div class="text-center sm:text-left w-full sm:w-1/2 flex flex-col items-center sm:items-start">
+                <div class="mx-auto sm:mx-0 w-24 h-24 sm:w-28 sm:h-28 rounded-2xl flex items-center justify-center mb-6 shadow-md overflow-hidden">
+            <img id="app-icon" src="" alt="应用图标" class="w-full h-full object-cover">
+        </div>
+
+                <h1 id="app-name" class="text-3xl sm:text-4xl font-bold text-gray-800 dark:text-white mb-2"></h1>
+        
+                <p id="app-description" class="text-gray-500 dark:text-gray-400 mb-6 sm:mb-8 text-sm sm:text-base"></p>
+    </div>
+    
+        <div class="w-full sm:w-1/2 text-center sm:text-left flex flex-col items-center sm:items-start">
+                <div id="app-info-container" class="flex flex-row justify-center sm:justify-start items-center mb-6 w-full flex-wrap gap-2">
+        </div>
+        
+                <div id="download-buttons-container" class="w-full sm:w-auto flex flex-col sm:flex-row flex-wrap gap-4 mb-6">
+        </div>
+        
+                <div class="mt-8 hidden sm:block w-full">
+            <p class="text-sm text-gray-400 dark:text-gray-500 mb-4">即刻在手机上查看：</p>
+            <div id="qrcode-container" class="w-36 h-36 bg-gray-100 dark:bg-gray-700 p-2 rounded-lg flex items-center justify-center shadow-inner transition-colors duration-300">
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="w-full max-w-sm sm:max-w-4xl mt-8">
+    <p class="text-center text-gray-500 dark:text-gray-400 mb-2 font-medium">你也可以在下面找到它：</p>
+    <div id="external-links" class="flex flex-col sm:flex-row justify-center sm:space-x-2 space-y-2 sm:space-y-0 text-xs">
+    </div>
+</div>
+
+<script>
+    // Tailwind CSS JIT 模式配置，支持动态类
+    tailwind.config = {
+        darkMode: 'class',
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // 定义所有可变数据
+        const appData = {
+            title: '应用下载',
+            icon: 'https://imgres.iefans.net/iefans/294/1469544-2024091814180166ea709972d7f.jpg',
+            name: '杀戮尖塔',
+            description: '我们将卡牌游戏与Roguelike游戏融为一体，制作出了这款最棒的单机组牌游戏。打造出独一无二的牌组、遇见无数离奇的生物、发现威力强大的遗物、去屠戮这座高塔吧！',
+            info: [
+                '版本: 2.3.15',
+                '大小: 893 MB',
+                '类型: apk'
+            ],
+            downloadButtons: [
+                { text: '立即下载', url: 'https://github.com/Cc-Cece/File/releases/download/v0.0.1/SlaytheSpire-2.3.15.apk' },
+                { text: '备用：QQ闪传', url: 'https://qfile.qq.com/q/oa5u1E0atM' },
+                { text: '备用：123网盘', url: 'https://www.123912.com/s/QAA0Vv-gN10d' },
+            ],
+            externalLinks: [
+                { text: 'Steam', url: 'https://store.steampowered.com/app/646570/Slay_the_Spire/?l=schinese&curator_clanid=26836284' },
+                { text: 'Google Play', url: 'https://play.google.com/store/apps/details?id=com.humble.SlayTheSpire&hl=zh' },
+                { text: 'App Store', url: 'https://apps.apple.com/tw/app/slay-the-spire/id1491530147' }
+            ]
+        };
+
+        // --- 模式切换功能 ---
+        const html = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const sunIcon = document.getElementById('sun-icon');
+        const moonIcon = document.getElementById('moon-icon');
+
+        // 初始化主题
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                html.classList.add('dark');
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+            } else {
+                html.classList.remove('dark');
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+            }
+        }
+
+        // 切换主题
+        function toggleTheme() {
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+            }
+        }
+
+        initTheme();
+        themeToggle.addEventListener('click', toggleTheme);
+        // --- 模式切换功能结束 ---
+
+        // 注入数据到 HTML
+        document.getElementById('page-title').textContent = appData.title;
+        document.getElementById('app-icon').src = appData.icon;
+        document.getElementById('app-name').textContent = appData.name;
+        document.getElementById('app-description').textContent = appData.description;
+
+        // 注入应用信息（版本、大小、类型）
+        const infoContainer = document.getElementById('app-info-container');
+        infoContainer.innerHTML = ''; // 清空现有内容
+        appData.info.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-full text-sm font-medium transition-colors duration-300';
+            div.textContent = item;
+            infoContainer.appendChild(div);
+        });
+
+        // 注入下载按钮
+        const downloadButtonsContainer = document.getElementById('download-buttons-container');
+        downloadButtonsContainer.innerHTML = '';
+        appData.downloadButtons.forEach((buttonData, index) => {
+            const a = document.createElement('a');
+            a.href = buttonData.url;
+            a.textContent = buttonData.text;
+            a.className = 'font-semibold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105 inline-block w-full text-lg sm:w-auto text-center';
+
+            // 第一个按钮使用主要样式，其余按钮为次要样式
+            if (index === 0) {
+                a.classList.add('bg-indigo-600', 'text-white', 'hover:bg-indigo-700');
+            } else {
+                a.classList.add('bg-gray-200', 'text-gray-800', 'hover:bg-gray-300', 'dark:bg-gray-700', 'dark:text-gray-200', 'dark:hover:bg-gray-600');
+            }
+            downloadButtonsContainer.appendChild(a);
+        });
+
+
+        // 注入外部链接
+        const externalLinksContainer = document.getElementById('external-links');
+        externalLinksContainer.innerHTML = ''; // 清空现有内容
+        appData.externalLinks.forEach(link => {
+            const a = document.createElement('a');
+            a.href = link.url;
+            a.target = '_blank';
+            a.className = 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-semibold py-1.5 px-4 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition duration-300 transform hover:scale-105 inline-block w-full text-center sm:w-auto';
+            a.textContent = link.text;
+            externalLinksContainer.appendChild(a);
+        });
+
+        // 生成二维码
+        const qrcodeContainer = document.getElementById('qrcode-container');
+        const downloadLink = window.location.href;
+
+        // 监听主题变化以更新二维码颜色
+        const qrcodeOptions = {
+            text: downloadLink,
+            width: 128,
+            height: 128,
+            colorDark : html.classList.contains('dark') ? "#f3f4f6" : "#1f2937", 
+            colorLight : html.classList.contains('dark') ? "#1f2937" : "#f3f4f6", 
+            correctLevel : QRCode.CorrectLevel.H
+        };
+
+        if (downloadLink && window.innerWidth >= 640) {
+            const qrcode = new QRCode(qrcodeContainer, qrcodeOptions);
+            qrcodeContainer.querySelector('canvas').style.borderRadius = '0';
+            
+            // 监听主题变化，并更新二维码
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.attributeName === 'class') {
+                        const newColorDark = html.classList.contains('dark') ? "#f3f4f6" : "#1f2937";
+                        const newColorLight = html.classList.contains('dark') ? "#1f2937" : "#f3f4f6";
+                        qrcode.makeCode(downloadLink); 
+                        qrcode.options.colorDark = newColorDark;
+                        qrcode.options.colorLight = newColorLight;
+                    }
+                });
+            });
+            observer.observe(html, { attributes: true });
+        }
+    });
+</script>
+
+</body>
+</html>
