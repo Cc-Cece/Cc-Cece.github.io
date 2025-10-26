@@ -1,316 +1,1001 @@
-<html>
-  <head>
-    <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Ceceport&#39;s Blog</title>
-<link rel="shortcut icon" href="https://cc.akihito.dpdns.org/favicon.ico?v=1758043797803">
-<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cc.akihito.dpdns.org/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Ceceport&#39;s Blog - Atom Feed" href="https://cc.akihito.dpdns.org/atom.xml">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
-
-
-
-    <meta name="description" content="How is this working at all?!" />
-  </head>
-  <body>
-    <div class="main">
-      <div class="main-content">
-        <div class="site-header">
-  <a href="https://cc.akihito.dpdns.org">
-    <img class="avatar header-face-logo" src="https://nmsr.nickac.dev/face/Ceceport" alt="">
-  </a>
-  <div class="header-text">
-    <h1 class="site-title">
-      Ceceport&#39;s Blog
-    </h1>
-    <p class="site-description tagline">
-      How is this working at all?!
-    </p>
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <title>NeoHKSK</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="icon" type="image/png" href="http://47.121.128.34:1024/images/logo.png">
+  <link rel="stylesheet" href="http://47.121.128.34:1024/assets/css/main.css" />
+  <link rel="stylesheet" href="http://47.121.128.34:1024/assets/css/style.css" />
+  <noscript>
+    <link rel="stylesheet" href="http://47.121.128.34:1024/assets/css/noscript.css" />
+  </noscript>
+  <style>
+  </style>
+</head>
+<body class="is-preload">
+  <div id="wrapper">
+    <nav id="nav">
+      <a href="#" class="icon solid"><img src="http://47.121.128.34:1024/images/10.png" alt="home"><span>主页</span></a>
+      <a href="#list" class="icon solid"><img src="http://47.121.128.34:1024/images/329357.png" alt="list"><span>服务器列表</span></a>
+      <a href="#leaderboard" class="icon solid"><img src="http://47.121.128.34:1024/images/960.png" alt="leaderboard"><span>排行榜</span></a>
+      <a href="#preview" class="icon solid"><img src="http://47.121.128.34:1024/images/977.png" alt="preview"><span>关于我们</span></a>
+      <a href="#contact" class="icon solid"><img src="http://47.121.128.34:1024/images/222809.png" alt="contact"><span>加入我们</span></a>
+			 <a href="#friends" class="icon solid"><img src="https://nmsr.nickac.dev/face/Ceceport" alt="blog" id="CeceportsImage"><span>友人帐</span></a>
+      <a href="http://47.121.128.34:1024/QAQ.html" class="icon solid" target="_blank"><img src="http://47.121.128.34:1024/images/1062.png"><span>近期动态</span></a>
+    </nav>
+    <div id="main">
+      <article id="home" class="panel intro">
+        <header>
+          <h1 id="home-title">NeoHKSK</h1>
+          <p id="home-motd"></p>
+          <p id="home-subtitle"></p>
+          <p>当前在线人数：<span id="total-online"></span></p>
+          <div class="player-list" id="all-players-list">
+          </div>
+        </header>
+        <a href="#list" class="jumplink pic">
+          <img src="http://47.121.128.34:1024/images/logo.png" alt=""  />
+        </a>
+      </article>
+      <article id="preview" class="panel">
+        <header>
+          <h2 id="preview-title">关于我们</h2>
+        </header>
+        <p id="preview-description">
+        </p>
+        <section id="preview-images-section">
+          <div class="row" id="preview-images-row">
+          </div>
+        </section>
+        <footer>
+          <ul class="actions special">
+            <li><a href="#contact" class="button primary scrolly">加入我们</a></li>
+          </ul>
+        </footer>
+      </article>
+      <article class="panel" id="friends">
+             <header>
+               <h2>友人帐</h2> </header>
+             <div class="skin-display-container" id="friends-skin-gallery">
+              <p>正在加载友人帐...</p>
+             </div>
+            </article>
+            <article id="leaderboard" class="panel">
+              <div class="leaderboard-tabs">
+                  </div>
+                  <header>
+                <h2>玩家排行榜</h2>
+              </header>
+              <div class="leaderboard-container" id="leaderboard-container">
+                <p>正在加载排行榜数据...</p>
+              </div>
+              <footer>
+                <ul class="actions special">
+                  <li><a href="#preview" class="button primary scrolly">查看服务器预览</a></li>
+                </ul>
+              </footer>
+            </article>
+      <article id="list" class="panel">
+        <header>
+          <h2>服务器列表</h2>
+        </header>
+        <div class="custom-server-list"  id="server-list-container">
+                    <p>正在加载服务器列表...</p>
+        </div>
+      </article>
+      <article id="contact" class="panel">
+        <header>
+          <h2>加入我们</h2>
+        </header>
+        <a href="https://qm.qq.com/q/GrqjzuCUcC" target="_blank"><button>加入QQ群</button></a>
+        <a href="#" target="_blank"><button>前往bilibili官方账号(占位)</button></a>
+      </article>
+    </div>
+    <div id="footer">
+      <ul class="copyright">
+      
+        <li>Copyright &copy; 2025-
+          <script>
+            document.write(new Date().getFullYear())
+          </script> <a href="#preview"><u>NeoHKSK</u></a>.
+        </li>
+      </ul>
+    </div>
   </div>
-  <p></p>
-  <div class="menu-container">
-    
-      
-        <a href="/" class="menu">
-          Home
-        </a>
-      
-    
-      
-        <a href="/archives" class="menu">
-          Archives
-        </a>
-      
-    
-      
-        <a href="/post/about" class="menu">
-          About
-        </a>
-      
-    
-  </div>
-  <p></p>
-  <div class="social-container">
-    
-      
-        <a href="https://github.com/Cc-Cece" target="_blank">
-          <i class="ri-github-line"></i>
-        </a>
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-  </div>
-</div>
-    
-        <div class="post-container">
-  
-    <article class="post">
-      <a href="https://cc.akihito.dpdns.org/post/p05/">
-        <h2 class="post-title">The Great Power&#39;s Dilemma: When GDP Growth No Longer Equates to Public Prosperity</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2025-08-08
-        </span>
-        <span>
-          8 min read
-        </span>
-        
-          <a href="https://cc.akihito.dpdns.org/tag/7ipF8ryd_7/" class="post-tag">
-            # china
-          </a>
-        
-          <a href="https://cc.akihito.dpdns.org/tag/WXAcz4JcVF4/" class="post-tag">
-            # GDP
-          </a>
-        
-          <a href="https://cc.akihito.dpdns.org/tag/GPoEkpFmrTF/" class="post-tag">
-            # science
-          </a>
-        
-          <a href="https://cc.akihito.dpdns.org/tag/Eo8koDwuzmb/" class="post-tag">
-            # en
-          </a>
-        
-      </div>
-      
-      <div class="post-abstract">
-        <p>In recent years, we have witnessed China's continuous GDP growth. Yet, an undeniable reality has also emerged: it's getting harder and harder to make a living. Small businesses are collapsing, large corporations are laying off staff and cutting salaries, and young people are struggling in the job market. This stark contrast between macroeconomic data and personal experience reveals deep-seated structural issues in the Chinese economy. This isn't just an economic fluctuation; it's a major eruption of the inherent contradictions within the &quot;China model.&quot;</p>
 
+  <div id="passwordModal" class="modal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center;">
+    <div class="modal-content" style="background-color: #fefefe; padding: 20px; border: 1px solid #888; width: 400px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+      <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 style="margin: 0; color: #333;">验证身份</h3>
+        <span class="close" style="color: #aaa; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
       </div>
-    </article>
-  
-    <article class="post">
-      <a href="https://cc.akihito.dpdns.org/post/p04/">
-        <h2 class="post-title">TikTok&#39;s Commodity: Your Time</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2025-07-16
-        </span>
-        <span>
-          4 min read
-        </span>
+      <div class="modal-body">
+        <p style="margin-bottom: 15px; color: #666; font-size: 20px;">你需要通过验证才可以查询服务器地址，更多信息请<a href="http://47.121.128.34:1024/#contact">点击这里</a></p>
+        <div style="margin-bottom: 20px; display: flex; align-items: center;">
+          <label for="serverName" style="margin-right: 5px; font-weight: bold; color: #333;">服务器：</label>
+          <span id="serverName" style="color: #007bff; font-weight: bold;"></span>
+        </div>
         
-          <a href="https://cc.akihito.dpdns.org/tag/OjwuPXHeN4/" class="post-tag">
-            # time
-          </a>
-        
-          <a href="https://cc.akihito.dpdns.org/tag/GPoEkpFmrTF/" class="post-tag">
-            # science
-          </a>
-        
-          <a href="https://cc.akihito.dpdns.org/tag/Eo8koDwuzmb/" class="post-tag">
-            # en
-          </a>
-        
-          <a href="https://cc.akihito.dpdns.org/tag/z1wLBvEjz3/" class="post-tag">
-            # funny
-          </a>
-        
-      </div>
-      
-      <div class="post-abstract">
-        
-      </div>
-    </article>
-  
-    <article class="post">
-      <a href="https://cc.akihito.dpdns.org/post/p03/">
-        <h2 class="post-title">The Mystery of Flight: What We Really Mean When We Talk About Science</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2024-04-10
-        </span>
-        <span>
-          5 min read
-        </span>
-        
-          <a href="https://cc.akihito.dpdns.org/tag/nTvCrxAW7H/" class="post-tag">
-            # physics
-          </a>
-        
-          <a href="https://cc.akihito.dpdns.org/tag/GPoEkpFmrTF/" class="post-tag">
-            # science
-          </a>
-        
-          <a href="https://cc.akihito.dpdns.org/tag/Eo8koDwuzmb/" class="post-tag">
-            # en
-          </a>
-        
-          <a href="https://cc.akihito.dpdns.org/tag/z1wLBvEjz3/" class="post-tag">
-            # funny
-          </a>
-        
-          <a href="https://cc.akihito.dpdns.org/tag/IwFyBgrb4ea/" class="post-tag">
-            # story
-          </a>
-        
-      </div>
-      
-      <div class="post-abstract">
-        <p>When we look up and see a plane carrying dozens of tons of weight soar through the sky, have you ever wondered: how does it fly? The question seems simple, and the answer seems obvious: lift generated by the wings.</p>
-<p>But if you were to ask a top aerodynamicist, they might give you a knowing smile and say, &quot;It's complicated.&quot;</p>
-
-      </div>
-    </article>
-  
-    <article class="post">
-      <a href="https://cc.akihito.dpdns.org/post/p02/">
-        <h2 class="post-title">Your Hobbies Are Giving You Away, or How I Found Your Steam Account</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2023-08-04
-        </span>
-        <span>
-          4 min read
-        </span>
-        
-          <a href="https://cc.akihito.dpdns.org/tag/z1wLBvEjz3/" class="post-tag">
-            # funny
-          </a>
-        
-          <a href="https://cc.akihito.dpdns.org/tag/suThwanMo10/" class="post-tag">
-            # steam
-          </a>
-        
-          <a href="https://cc.akihito.dpdns.org/tag/IwFyBgrb4ea/" class="post-tag">
-            # story
-          </a>
-        
-      </div>
-      
-      <div class="post-abstract">
-        <p>Today, I’m going to reveal a secret: how I found your Steam account!</p>
-
-      </div>
-    </article>
-  
-    <article class="post">
-      <a href="https://cc.akihito.dpdns.org/post/p01/">
-        <h2 class="post-title">Minecraft and QQ group server interconnection tutorial</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2022-08-29
-        </span>
-        <span>
-          5 min read
-        </span>
-        
-          <a href="https://cc.akihito.dpdns.org/tag/znUkyMoSDj/" class="post-tag">
-            # Server
-          </a>
-        
-          <a href="https://cc.akihito.dpdns.org/tag/qT9oEMMi-Ps/" class="post-tag">
-            # MCbot
-          </a>
-        
-          <a href="https://cc.akihito.dpdns.org/tag/jV5twjbHxL/" class="post-tag">
-            # Minecraft
-          </a>
-        
-      </div>
-      
-      <div class="post-abstract">
-        <p>Are you still envious of Discord and Telegram bots? Are you still annoyed that you need a VPN to use them? Now, a server-to-chat connection bot based on Forge and Fabric is here.</p>
-
-      </div>
-    </article>
-  
-</div>
-
-    
-        <div class="pagination-container">
-  
-  
-</div>
-
-    
-        <div class="site-footer">
-  
-  <div class="menu-container">
-    
-      
-        <a href="/" class="menu">
-          Home
-        </a>
-      
-    
-      
-        <a href="/archives" class="menu">
-          Archives
-        </a>
-      
-    
-      
-        <a href="/post/about" class="menu">
-          About
-        </a>
-      
-    
-  </div>
-  <div class="social-container">
-    
-      
-        <a href="https://github.com/Cc-Cece" target="_blank">
-          <i class="ri-github-line"></i>
-        </a>
-      
-    
-      
-    
-      
-        <a href="https://discord.gg/WFrNd95j" target="_blank">
-          <i class="ri-discord-line"></i>
-        </a>
-      
-    
-      
-        <a href="mailto:suyu041219@gmail.com?subject=From Ceceport&#39;s Blog" target="_blank">
-          <i class="ri-mail-line"></i>
-        </a>
-      
-    
-      
-    
-  </div>
-  <a class="rss" href="https://cc.akihito.dpdns.org/atom.xml" target="_blank">
-    <i class="ri-rss-line"></i> RSS
-  </a>
-</div>
-
+          <div style="margin-bottom: 20px;">
+            <label for="passwordInput" style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">密码：</label>
+            <input id="passwordInput" placeholder="请输入密码" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 20px; box-sizing: border-box; color: #333;">
+          </div>
+          <div style="margin-bottom: 20px;">
+            <label style="display: flex; align-items: center; cursor: pointer; font-size: 16px; color: #333;">
+              <input type="checkbox" id="rememberPassword" style="margin-right: 8px; width: 16px; height: 16px; accent-color: #007bff; cursor: pointer; appearance: checkbox !important; -webkit-appearance: checkbox !important; -moz-appearance: checkbox !important;">
+              <span>14天内记住密码</span>
+            </label>
+          </div>
+          <div id="errorMessage" style="color: #dc3545; margin-bottom: 15px; display: none;font-size: 20px;"></div>
+        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+          <button id="cancelBtn" style="padding: 10px 20px; border: 1px solid #ddd; background-color: #f8f9fa; color: #333; border-radius: 4px; cursor: pointer; font-size: 14px;">取消</button>
+          <button id="confirmBtn" style="padding: 10px 20px; border: none; background-color: #007bff; color: white; border-radius: 4px; cursor: pointer; font-size: 14px;">确认</button>
+        </div>
       </div>
     </div>
-  </body>
+  </div>
+
+  <div id="addressModal" class="modal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center;">
+    <div class="modal-content" style="background-color: #fefefe; padding: 20px; border: 1px solid #888; width: 400px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+      <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 style="margin: 0; color: #333;">服务器地址</h3>
+        <span class="close" style="color: #aaa; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div style="margin-bottom: 20px; display: flex;">
+          <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">服务器：</label>
+          <span id="addressServerName" style="color: #007bff; font-weight: bold;"></span>
+        </div>
+        <div style="margin-bottom: 20px; font-size: 16px;">
+        <span style="color: #333;">如何使用下面的地址？</span>
+        <a href="http://47.121.128.34:1024/help-1.html" target="_blank" style="color: #007bff; text-decoration: none;">点击查看教程</a>
+      </div>
+        <div id="addressListContainer" style="margin-bottom: 20px;">
+          </div>
+
+        <div style="display: flex; justify-content: flex-end;">
+          <button id="closeAddressBtn" style="padding: 10px 20px; border: 1px solid #ddd; background-color: #f8f9fa; color: #333; border-radius: 4px; cursor: pointer; font-size: 14px;">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="http://47.121.128.34:1024/assets/js/jquery.min.js"></script>
+  <script src="http://47.121.128.34:1024/assets/js/browser.min.js"></script>
+  <script src="http://47.121.128.34:1024/assets/js/breakpoints.min.js"></script>
+  <script src="http://47.121.128.34:1024/assets/js/util.js"></script>
+  <script src="http://47.121.128.34:1024/assets/js/main.js"></script>
+  
+  <script>
+        document.addEventListener('DOMContentLoaded', function() {
+      const desktopImages = [
+        "http://47.121.128.34:1024/images/bg_desktop/bg_desktop_0.jpg",
+        "http://47.121.128.34:1024/images/bg_desktop/bg_desktop_1.jpg",
+        "http://47.121.128.34:1024/images/bg_desktop/bg_desktop_2.jpg",
+        "http://47.121.128.34:1024/images/bg_desktop/bg_desktop_3.jpg",
+        "http://47.121.128.34:1024/images/bg_desktop/bg_desktop_4.jpg",
+        "http://47.121.128.34:1024/images/bg_desktop/bg_desktop_5.jpg",
+        "http://47.121.128.34:1024/images/bg_desktop/bg_desktop_6.jpg",
+        "http://47.121.128.34:1024/images/bg_desktop/bg_desktop_7.jpg",
+        "http://47.121.128.34:1024/images/bg_desktop/bg_desktop_8.jpg",
+        "http://47.121.128.34:1024/images/bg_desktop/bg_desktop_9.jpg"
+      ];
+      const mobileImages = [
+        "http://47.121.128.34:1024/images/bg_mobile/bg_mobile_0.jpg",
+        "http://47.121.128.34:1024/images/bg_mobile/bg_mobile_1.jpg",
+        "http://47.121.128.34:1024/images/bg_mobile/bg_mobile_2.jpg",
+        "http://47.121.128.34:1024/images/bg_mobile/bg_mobile_3.jpg",
+        "http://47.121.128.34:1024/images/bg_mobile/bg_mobile_4.jpg",
+        "http://47.121.128.34:1024/images/bg_mobile/bg_mobile_5.jpg",
+        "http://47.121.128.34:1024/images/bg_mobile/bg_mobile_6.jpg",
+        "http://47.121.128.34:1024/images/bg_mobile/bg_mobile_7.jpg",
+        "http://47.121.128.34:1024/images/bg_mobile/bg_mobile_8.jpg",
+        "http://47.121.128.34:1024/images/bg_mobile/bg_mobile_9.jpg"
+      ];
+
+      function setBackgroundImageByDate(imageArray) {
+        const today = new Date();
+        const dayOfMonth = today.getDate();
+        const lastDigit = dayOfMonth % 10;
+        document.body.style.backgroundImage = `url('${imageArray[lastDigit]}')`;
+      }
+
+      function checkAndSetBackgroundImage() {
+        if (window.innerWidth > 768) {
+          setBackgroundImageByDate(desktopImages);
+        } else {
+          setBackgroundImageByDate(mobileImages);
+        }
+      }
+
+      checkAndSetBackgroundImage();
+      window.addEventListener('resize', checkAndSetBackgroundImage); // 窗口大小改变时执行更换背景图片
+
+      // --- 获取 API 数据并更新页面 ---
+      fetch('http://47.121.128.34:1024/api/server_status')
+        .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+        .then(data => {
+          console.log('API Data:', data);
+
+          // --- 更新主页信息 ---
+                    if (document.getElementById('home-motd')) {
+                        const firstServer = data.servers && data.servers.length > 0 ? data.servers[0] : null;
+       document.getElementById('home-motd').innerHTML = firstServer && firstServer.motd ? firstServer.motd : '';// 副标题显示的信息,备用
+                    }
+                    if (document.getElementById('home-subtitle')) {
+       document.getElementById('home-subtitle').innerHTML = data.server_info && data.server_info.show_subtitle && data.server_info.name ? data.server_info.name : '';
+                    }
+                    if (document.getElementById('total-online')) {
+              document.getElementById('total-online').textContent = data.total_players !== undefined ? data.total_players : 'N/A';
+                    }
+
+          const allPlayersList = document.getElementById('all-players-list');
+          if (allPlayersList && data.all_players && Array.isArray(data.all_players)) {
+            allPlayersList.innerHTML = '';
+            data.all_players.forEach(player => {
+              const playerDiv = document.createElement('div');
+              playerDiv.style.display = 'flex';
+              playerDiv.style.alignItems = 'center';
+              playerDiv.style.marginBottom = '2px';
+              const img = document.createElement('img');
+              img.src = player.head_url || `https://nmsr.nickac.dev/face/${player.uuid || 'default'}?size=40&overlay=true`;
+              img.alt = player.name || '未知玩家';
+                              img.title = player.name || '未知玩家';
+
+              
+              const span = document.createElement('span');
+              span.textContent = player.name || '未知玩家';
+              playerDiv.appendChild(img);
+              playerDiv.appendChild(span);
+              allPlayersList.appendChild(playerDiv);
+            });
+                        } else if (allPlayersList) {
+                            allPlayersList.textContent = '暂无在线玩家信息。';
+                        }
+
+          // --- 更新服务器预览信息 ---
+          const previewTitle = document.getElementById('preview-title');
+          const previewDescription = document.getElementById('preview-description');
+          const previewImagesRow = document.getElementById('preview-images-row');
+
+          if (data.server_info && data.server_info.preview) {
+                        if (previewTitle) previewTitle.textContent = data.server_info.preview.title || '服务器预览';
+                        if (previewDescription) previewDescription.innerHTML = data.server_info.preview.descr || '这是一个服务器的简要预览。';
+                        if (previewImagesRow) {
+                previewImagesRow.innerHTML = ''; // 清空现有图片
+                const previewImageNames = [ // 目前是硬编码
+                  
+
+                ];
+
+                previewImageNames.forEach(imageName => {
+                  const colDiv = document.createElement('div');
+                  colDiv.className = 'col-4 col-6-medium col-12-small';
+                  const a = document.createElement('a');
+                  a.href = imageName;
+                                a.target = '_blank'; 
+                  a.className = 'image fit';
+                  const img = document.createElement('img');
+                  img.src = imageName;
+                  img.alt = '服务器预览图';
+                  img.style.borderRadius = '4px';
+                  img.style.boxShadow = '0 1px 5px rgba(0,0,0,0.1)';
+                  a.appendChild(img);
+                  colDiv.appendChild(a);
+                  previewImagesRow.appendChild(colDiv);
+                });
+                        }
+          } else {
+            console.warn('API 返回的 server_info 或 preview 数据不存在。');
+            if (previewTitle) previewTitle.textContent = '服务器预览';
+            if (previewDescription) previewDescription.textContent = '无法加载服务器预览信息。';
+            if (previewImagesRow) previewImagesRow.textContent = '无法加载预览图片。';
+          }
+
+                        // --- 排行榜部分 ---
+                        const leaderboardTabs = document.querySelector('.leaderboard-tabs');
+                        const leaderboardContainer = document.getElementById('leaderboard-container');
+
+                        if (leaderboardTabs) leaderboardTabs.innerHTML = ''; 
+                        if (leaderboardContainer) leaderboardContainer.innerHTML = ''; 
+
+                        if (leaderboardContainer && data.leaderboards && typeof data.leaderboards === 'object' && Object.keys(data.leaderboards).length > 0) {
+                            const serverPaths = Object.keys(data.leaderboards);
+
+                            serverPaths.forEach((serverPath, serverIndex) => {
+                                const serverData = data.leaderboards[serverPath];
+                                
+
+                                const button = document.createElement('button');
+                                button.className = 'tab-button';
+
+                                let displayNameForButton;
+                                if (serverData && serverData.serverDisplayName) {
+                                    displayNameForButton = serverData.serverDisplayName;
+                                } else {
+
+                                    const pathSegments = serverPath.replace(/\\\\/g, '/').split('/').filter(s => s.length > 0);
+                                    displayNameForButton = pathSegments.pop() || `服务器 ${serverIndex + 1}`;
+                                    console.warn(`API did not provide 'serverDisplayName' for server path: ${serverPath}. Using fallback: ${displayNameForButton}`);
+                                }
+                                button.textContent = displayNameForButton;
+                                button.dataset.targetId = `leaderboard-server-content-${serverIndex}`;
+
+                                if (leaderboardTabs) {
+                                    leaderboardTabs.appendChild(button);
+                                }
+
+                                
+                                const serverSpecificContainer = document.createElement('div');
+                                serverSpecificContainer.id = `leaderboard-server-content-${serverIndex}`;
+                                serverSpecificContainer.className = 'leaderboard-server-content';
+
+                                if (serverIndex !== 0) {
+                                    serverSpecificContainer.style.display = 'none';
+                                } else {
+                                    button.classList.add('active');
+                                }
+
+                                const serverBoardsArray = serverData.boards;
+
+                                if (serverBoardsArray && Array.isArray(serverBoardsArray) && serverBoardsArray.length > 0) {
+                                    serverBoardsArray.forEach(lbData => {
+                                        const lbSection = document.createElement('div');
+                                        lbSection.className = 'leaderboard-section';
+
+                                        const title = document.createElement('h3');
+                                        title.className = 'leaderboard-section-title';
+                                        title.textContent = lbData.name;
+                                        lbSection.appendChild(title);
+
+                                        if (lbData.leaderboard && Array.isArray(lbData.leaderboard) && lbData.leaderboard.length > 0) {
+                                            const ol = document.createElement('ol');
+                                            ol.className = 'leaderboard-list';
+                                            lbData.leaderboard.forEach(item => {
+                                                if (Array.isArray(item) && item.length === 3) {
+                                                    const uuid = item[0];
+                                                    const name = item[1];
+                                                    const value = item[2];
+
+                                                    const li = document.createElement('li');
+                                                    li.className = 'leaderboard-item';
+
+                                                    const playerInfoDiv = document.createElement('div');
+                                                    playerInfoDiv.className = 'player-info';
+
+                                                    const avatar = document.createElement('img');
+                                                    avatar.src = `https://nmsr.nickac.dev/face/${name || 'default'}?size=32&overlay=true`;
+                                                    avatar.alt = name || '玩家头像';
+                                                    avatar.className = 'player-avatar';
+                                                    avatar.onerror = function() { this.src = `https://nmsr.nickac.dev/face/default?size=32&overlay=true`; this.alt = '默认头像';};
+
+                                                    const playerNameSpan = document.createElement('span');
+                                                    playerNameSpan.className = 'player-name';
+                                                    playerNameSpan.textContent = name || '未知玩家';
+
+                                                    const statSpan = document.createElement('span');
+                                                    statSpan.className = 'player-stat';
+                                                    statSpan.textContent = value !== undefined ? value : '-';
+
+                                                    playerInfoDiv.appendChild(avatar);
+                                                    playerInfoDiv.appendChild(playerNameSpan);
+                                                    li.appendChild(playerInfoDiv);
+                                                    li.appendChild(statSpan);
+                                                    ol.appendChild(li);
+                                                } else {
+                                                    console.warn(`服务器 "${displayNameForButton}", 排行榜 "${lbData.name}" 的数据项格式不正确:`, item);
+                                                }
+                                            });
+                                            lbSection.appendChild(ol);
+                                        } else {
+                                            const p = document.createElement('p');
+                                            p.textContent = '暂无此排行榜数据。';
+                                            lbSection.appendChild(p);
+                                        }
+                                        serverSpecificContainer.appendChild(lbSection);
+                                    });
+                                } else { 
+                                    const p = document.createElement('p');
+                                    p.textContent = `服务器 "${displayNameForButton}" 暂无排行榜数据。`;
+                                    serverSpecificContainer.appendChild(p);
+                                }
+                                leaderboardContainer.appendChild(serverSpecificContainer);
+                            });
+
+                            // 为所有按钮添加点击事件监听器
+                            if (leaderboardTabs) {
+                                const allTabButtons = leaderboardTabs.querySelectorAll('.tab-button');
+                                const allServerContentDivs = leaderboardContainer.querySelectorAll('.leaderboard-server-content');
+
+                                allTabButtons.forEach(btn => {
+                                    btn.addEventListener('click', () => {
+                                        allTabButtons.forEach(b => b.classList.remove('active'));
+                                        allServerContentDivs.forEach(div => div.style.display = 'none');
+
+                                        btn.classList.add('active');
+                                        const targetDiv = document.getElementById(btn.dataset.targetId);
+                                        if (targetDiv) {
+                                            targetDiv.style.display = 'grid';
+                                        }
+                                    });
+                                });
+                            }
+
+                        } else if (leaderboardContainer) {
+                            leaderboardContainer.textContent = '无法加载排行榜数据或暂无服务器排行榜。';
+                            if (data.leaderboards && typeof data.leaderboards === 'object' && Object.keys(data.leaderboards).length === 0) {
+                                console.warn('API 返回的 leaderboards 数据为空对象。');
+                            } else {
+                                console.error('API 返回的 leaderboards 数据格式不正确或不存在:', data.leaderboards);
+                            }
+                        }
+
+
+          // --- 更新服务器列表 ---
+          const serverListContainer = document.getElementById('server-list-container');
+          if (serverListContainer && data.servers && Array.isArray(data.servers)) {
+            serverListContainer.innerHTML = ''; 
+            data.servers.forEach((server, index) => {
+              const serverItemDiv = document.createElement('div');
+              serverItemDiv.className = 'server-item'; 
+                                serverItemDiv.style.marginBottom = '20px'; 
+                                serverItemDiv.style.padding = '15px';
+                                serverItemDiv.style.border = '1px solid #ddd';
+                                serverItemDiv.style.borderRadius = '8px';
+                                serverItemDiv.style.backgroundColor = 'rgba(249,249,249,0.5)';
+
+
+              const h3 = document.createElement('h3');
+              h3.textContent = server.name || '未知服务器';
+              const descP = document.createElement('p');
+              descP.textContent = server.description || '暂无描述。';
+              const onlineP = document.createElement('p');
+              onlineP.textContent = `当前在线：${server.current_players !== undefined ? server.current_players : '?'} / ${server.max_players !== undefined ? server.max_players : '?'}`;
+              const motdP = document.createElement('p'); 
+              motdP.textContent = `MOTD：${server.motd || 'N/A'}`;
+
+              const pingP = document.createElement('p');
+              pingP.textContent = 'Ping: ';
+              const pingSpan = document.createElement('span');
+              pingSpan.className = 'ping-value';
+                                let latency = server.latency !== undefined ? Math.round(server.latency / 3) : null; 
+                                if (latency !== null) {
+                    if (latency < 150) {
+								pingSpan.style.fontWeight = 800;
+                      pingSpan.style.backgroundColor = 'green';
+        					pingSpan.style.color = 'white';
+								pingSpan.style.borderRadius = '5px';
+								pingSpan.style.paddingRight = '5px';
+								pingSpan.style.paddingLeft = '5px';
+                    } else if (latency < 500) {
+                      pingSpan.style.backgroundColor = 'yellow';
+        					pingSpan.style.color = 'black';
+								pingSpan.style.borderRadius = '5px';
+								pingSpan.style.paddingRight = '5px';
+								pingSpan.style.paddingLeft = '5px';
+						pingSpan.style.fontWeight = 800;
+                    } else {
+                      pingSpan.style.backgroundColor = 'red';
+        					pingSpan.style.color = 'white';
+								pingSpan.style.borderRadius = '5px';
+								pingSpan.style.paddingRight = '5px';
+								pingSpan.style.paddingLeft = '5px';
+						pingSpan.style.fontWeight = 800;
+                    }
+                    pingSpan.textContent = `${latency}ms`;
+                                } else {
+                                    pingSpan.textContent = 'N/A';
+                      pingSpan.style.backgroundColor = 'grey';
+        					pingSpan.style.color = 'white';
+								pingSpan.style.borderRadius = '5px';
+									pingSpan.style.paddingRight = '5px';
+								pingSpan.style.paddingLeft = '5px';
+									pingSpan.style.fontWeight = 800;
+                                }
+              pingP.appendChild(pingSpan);
+
+              serverItemDiv.appendChild(h3);
+              serverItemDiv.appendChild(descP);
+              serverItemDiv.appendChild(onlineP);
+              // serverItemDiv.appendChild(motdP);
+              serverItemDiv.appendChild(pingP);
+
+              if (server.online) {
+                const playerListUl = document.createElement('ul');
+                playerListUl.className = 'player-list'; 
+                                playerListUl.style.listStyle = 'none';
+                                playerListUl.style.paddingLeft = '0';
+                                playerListUl.style.display = 'flex';
+                                playerListUl.style.flexWrap = 'wrap';
+                                playerListUl.style.gap = '10px';
+                                playerListUl.style.marginTop = '10px';
+
+                if (server.players && Array.isArray(server.players) && server.players.length > 0) {
+                    server.players.forEach(player => {
+                      const li = document.createElement('li');
+                                        li.style.display = 'flex';
+                                        li.style.alignItems = 'center';
+                      const img = document.createElement('img');
+                      img.src = player.head_url || `https://nmsr.nickac.dev/face/${player.uuid || 'default'}?size=32&overlay=true`;
+                      img.alt = player.name || '玩家';
+                                        img.title = player.name || '玩家';
+
+                      const span = document.createElement('span');
+                      span.textContent = player.name || '未知玩家';
+                     
+                      li.appendChild(img);
+                      li.appendChild(span);
+                      playerListUl.appendChild(li);
+                    });
+                                } else {
+                                    const noPlayersLi = document.createElement('li');
+                                    noPlayersLi.textContent = '当前无玩家在线。';
+                                    noPlayersLi.style.fontSize = '0.9em';
+                                    playerListUl.appendChild(noPlayersLi);
+                                }
+                serverItemDiv.appendChild(playerListUl);
+              } else {
+                const offlineP = document.createElement('p');
+                offlineP.className = 'offline'; 
+                offlineP.textContent = '服务器离线';
+                                offlineP.style.color = 'tomato';
+                                offlineP.style.fontWeight = 'bold';
+                serverItemDiv.appendChild(offlineP);
+              }
+
+              // 添加操作按钮容器
+              const buttonContainer = document.createElement('div');
+              buttonContainer.style.marginTop = '10px';
+              buttonContainer.style.display = 'flex';
+              buttonContainer.style.gap = '10px';
+              buttonContainer.style.flexWrap = 'wrap';
+
+              // 添加查看地图按钮
+              if (server.map_url) {
+                const mapLink = document.createElement('a');
+                mapLink.href = server.map_url;
+                mapLink.target = '_blank';
+                const mapButton = document.createElement('button');
+                mapButton.textContent = '查看地图';
+                mapButton.style.marginTop = '0px';
+                mapLink.appendChild(mapButton);
+                buttonContainer.appendChild(mapLink);
+              }
+
+              // 添加查询地址按钮
+              const queryAddressButton = document.createElement('button');
+              queryAddressButton.textContent = '查询地址';
+              queryAddressButton.className = 'query-address-btn';
+              queryAddressButton.dataset.serverIndex = index.toString();
+              queryAddressButton.style.marginTop = '0px';
+              queryAddressButton.style.borderRadius = '4px';
+              queryAddressButton.style.border = 'none';
+              buttonContainer.appendChild(queryAddressButton);
+
+              serverItemDiv.appendChild(buttonContainer);
+              serverListContainer.appendChild(serverItemDiv);
+            });
+                        } else if (serverListContainer) {
+                            serverListContainer.textContent = '无法加载服务器列表。';
+                        }
+
+
+          // --- 根据服务器状态更新页面标题 ---
+          const offlineStatus = data.servers && data.servers.every(server => !server.online);
+          document.title = offlineStatus ? 'NeoHKSK (全部离线)' : 'NeoHKSK';
+          if (offlineStatus) {
+            if(document.getElementById('home-title')) document.getElementById('home-title').textContent = 'NeoHKSK';
+            if(document.getElementById('home-motd')) document.getElementById('home-motd').textContent = '所有服务器目前不在线~';
+          }
+
+                        // --- 加载友人帐皮肤 ---
+                        fetchFriendSkins(data); 
+
+        })
+        .catch(error => {
+          console.error('Error fetching API data:', error);
+                    const errorMsg = '无法加载数据，请稍后再试。';
+          if(document.getElementById('home-motd')) document.getElementById('home-motd').textContent = '无法加载服务器信息。';
+          if(document.getElementById('server-list-container')) document.getElementById('server-list-container').textContent = errorMsg;
+          if(document.getElementById('leaderboard-container')) document.getElementById('leaderboard-container').textContent = errorMsg;
+          if(document.getElementById('preview-title')) document.getElementById('preview-title').textContent = '服务器预览';
+          if(document.getElementById('preview-description')) document.getElementById('preview-description').textContent = '无法加载服务器预览信息。';
+          if(document.getElementById('preview-images-row')) document.getElementById('preview-images-row').textContent = '无法加载预览图片。';
+                    if(document.getElementById('friends-skin-gallery')) document.getElementById('friends-skin-gallery').textContent = '无法加载友人帐信息。';
+        });
+    });
+
+    // (***) --- 查询地址功能相关代码 (已更新) --- (***)
+    let currentServerIndex = '';
+    let currentServerName = '';
+    
+    // 密码记忆功能
+    const PASSWORD_MEMORY_KEY = 'nk_minecraft_password';
+    const PASSWORD_MEMORY_EXPIRY_KEY = 'nk_minecraft_password_expiry';
+    
+    // 检查是否有保存的密码
+    function getStoredPassword() {
+      const expiry = localStorage.getItem(PASSWORD_MEMORY_EXPIRY_KEY);
+      if (expiry && Date.now() < parseInt(expiry)) {
+        return localStorage.getItem(PASSWORD_MEMORY_KEY);
+      } else {
+        // 清除过期的密码
+        localStorage.removeItem(PASSWORD_MEMORY_KEY);
+        localStorage.removeItem(PASSWORD_MEMORY_EXPIRY_KEY);
+        return null;
+      }
+    }
+    
+    // 保存密码
+    function savePassword(password) {
+      if (document.getElementById('rememberPassword').checked) {
+        const expiry = Date.now() + (14 * 24 * 60 * 60 * 1000); // 14天后过期
+        localStorage.setItem(PASSWORD_MEMORY_KEY, password);
+        localStorage.setItem(PASSWORD_MEMORY_EXPIRY_KEY, expiry.toString());
+      }
+    }
+
+    // (***) 为查询地址按钮添加事件监听器 (逻辑更新) (***)
+    // (***) 注意: 此函数现在是 async (***)
+    document.addEventListener('click', async function(event) {
+      if (event.target.classList.contains('query-address-btn')) {
+        // 阻止按钮的默认行为（如果它是 <a> 或 <form> 的一部分）
+        event.preventDefault(); 
+        
+        currentServerIndex = event.target.dataset.serverIndex;
+        const serverItem = event.target.closest('.server-item');
+        const serverNameElement = serverItem.querySelector('h3');
+        currentServerName = serverNameElement ? serverNameElement.textContent : '未知服务器';
+        
+        const storedPassword = getStoredPassword();
+        const passwordToTry = storedPassword || ""; // 使用已存密码或空字符串
+
+        // (新) 显示加载状态
+        const queryBtn = event.target;
+        const originalBtnText = queryBtn.textContent;
+        queryBtn.textContent = '查询中...';
+        queryBtn.disabled = true;
+
+        try {
+          const result = await queryServerAddress(currentServerIndex, passwordToTry);
+          
+          if (result.success) {
+            // 成功: 直接显示地址
+            showAddressModal(currentServerName, result.addresses);
+          } else {
+            // 失败: 意味着需要密码 (或已存密码错误)
+            if (storedPassword) {
+              // 已存密码无效，清除它
+              localStorage.removeItem(PASSWORD_MEMORY_KEY);
+              localStorage.removeItem(PASSWORD_MEMORY_EXPIRY_KEY);
+            }
+            // (新) 显示密码输入框
+            showPasswordModal();
+          }
+        } catch (error) {
+          // 网络错误等
+          alert('查询时发生网络错误，请稍后再试。');
+          console.error('Query address error:', error);
+        } finally {
+          // (新) 恢复按钮状态
+          queryBtn.textContent = originalBtnText;
+          queryBtn.disabled = false;
+        }
+      }
+    });
+
+    // (***) 显示密码输入模态框 (逻辑更新) (***)
+    function showPasswordModal() {
+      const modal = document.getElementById('passwordModal');
+      const serverNameSpan = document.getElementById('serverName');
+      const passwordInput = document.getElementById('passwordInput');
+      const errorMessage = document.getElementById('errorMessage');
+      const rememberPasswordCheckbox = document.getElementById('rememberPassword');
+      
+      serverNameSpan.textContent = currentServerName;
+      
+      // (新) 移除了自动提交逻辑
+      // 模态框现在只负责显示
+      
+      passwordInput.value = '';
+      rememberPasswordCheckbox.checked = false;
+      errorMessage.style.display = 'none';
+      modal.style.display = 'flex'; // (新) 使用 flex 居中
+      passwordInput.focus();
+    }
+
+    // 隐藏密码输入模态框
+    function hidePasswordModal() {
+      const modal = document.getElementById('passwordModal');
+      modal.style.display = 'none';
+    }
+
+    // (***) 显示地址模态框 (逻辑更新) (***)
+    function showAddressModal(serverName, addresses) {
+      const modal = document.getElementById('addressModal');
+      const addressServerName = document.getElementById('addressServerName');
+      const addressListContainer = document.getElementById('addressListContainer');
+      
+      addressServerName.textContent = serverName;
+      addressListContainer.innerHTML = ''; // 清空旧内容
+
+      if (!addresses || addresses.length === 0) {
+        addressListContainer.textContent = '未配置可用的服务器地址。';
+        modal.style.display = 'flex'; // (新) 使用 flex 居中
+        return;
+      }
+
+      addresses.forEach(item => {
+        const addressBox = document.createElement('div');
+        addressBox.style.marginBottom = '15px';
+
+        // 添加描述
+        const descriptionLabel = document.createElement('label');
+        descriptionLabel.style.display = 'block';
+        descriptionLabel.style.marginBottom = '5px';
+        descriptionLabel.style.fontWeight = 'bold';
+        descriptionLabel.style.color = '#333';
+        descriptionLabel.textContent = item.description || '地址';
+        addressBox.appendChild(descriptionLabel);
+
+        // 添加地址和复制按钮
+        const addressInnerBox = document.createElement('div');
+        addressInnerBox.style.display = 'flex';
+        addressInnerBox.style.gap = '10px';
+        addressInnerBox.style.alignItems = 'center';
+
+        const addressSpan = document.createElement('span');
+        addressSpan.textContent = item.address;
+        addressSpan.style.fontFamily = 'monospace';
+        addressSpan.style.fontSize = '16px';
+        addressSpan.style.color = '#333';
+        addressSpan.style.backgroundColor = '#f8f9fa';
+        addressSpan.style.padding = '8px';
+        addressSpan.style.borderRadius = '4px';
+        addressSpan.style.border = '1px solid #dee2e6';
+        addressSpan.style.wordBreak = 'break-all';
+        addressSpan.style.flexGrow = '1';
+        
+        const copyBtn = document.createElement('button');
+        copyBtn.textContent = '复制';
+        copyBtn.className = 'copy-address-btn-dynamic'; // 新 class
+        copyBtn.dataset.address = item.address; // 存储地址
+        copyBtn.style.padding = '8px 16px';
+        copyBtn.style.border = 'none';
+        copyBtn.style.backgroundColor = '#007bff'; // 蓝色
+        copyBtn.style.color = 'white';
+        copyBtn.style.borderRadius = '4px';
+        copyBtn.style.cursor = 'pointer';
+        copyBtn.style.fontSize = '14px';
+
+        addressInnerBox.appendChild(addressSpan);
+        addressInnerBox.appendChild(copyBtn);
+        addressBox.appendChild(addressInnerBox);
+        addressListContainer.appendChild(addressBox);
+      });
+      
+      modal.style.display = 'flex'; // (新) 使用 flex 居中
+    }
+
+    // 隐藏地址模态框
+    function hideAddressModal() {
+      const modal = document.getElementById('addressModal');
+      modal.style.display = 'none';
+    }
+
+    // 查询服务器地址 (逻辑不变)
+    async function queryServerAddress(serverIndex, password) {
+      try {
+        const response = await fetch('/api/get_address', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            server_index: serverIndex,
+            password: password
+          })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          return { success: true, addresses: data.addresses };
+        } else {
+          return { success: false, error: data.error || '未知错误' };
+        }
+      } catch (error) {
+        console.error('查询地址时发生错误:', error);
+        return { success: false, error: '网络错误，请稍后再试' };
+      }
+    }
+
+    // 复制地址到剪贴板 (逻辑不变)
+    function copyToClipboard(text, buttonElement) {
+      const originalText = buttonElement.textContent;
+      
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+          showCopySuccess(buttonElement, originalText);
+        }).catch(err => {
+          console.error('复制失败:', err);
+          fallbackCopyToClipboard(text, buttonElement, originalText);
+        });
+      } else {
+        fallbackCopyToClipboard(text, buttonElement, originalText);
+      }
+    }
+
+    // 备用复制方法 (逻辑不变)
+    function fallbackCopyToClipboard(text, buttonElement, originalText) {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      textArea.style.top = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      
+      try {
+        document.execCommand('copy');
+        showCopySuccess(buttonElement, originalText);
+      } catch (err) {
+        console.error('复制失败:', err);
+        buttonElement.textContent = '复制失败';
+        setTimeout(() => {
+          buttonElement.textContent = originalText;
+        }, 3000);
+      }
+      
+      document.body.removeChild(textArea);
+    }
+
+    // 显示复制成功状态 (逻辑不变)
+    function showCopySuccess(buttonElement, originalText) {
+      buttonElement.textContent = '复制成功！';
+      buttonElement.style.backgroundColor = '#28a745'; // 绿色
+      setTimeout(() => {
+        buttonElement.textContent = originalText;
+        buttonElement.style.backgroundColor = '#007bff'; // 恢复为蓝色
+      }, 3000);
+    }
+
+    // (***) 模态框事件监听器 (合并了逻辑) (***)
+    document.addEventListener('click', async function(event) {
+      // 密码模态框关闭
+      if (event.target.id === 'passwordModal' || event.target.classList.contains('close') || event.target.id === 'cancelBtn') {
+        hidePasswordModal();
+      }
+      
+      // 地址模态框关闭
+      if (event.target.id === 'addressModal' || event.target.classList.contains('close') || event.target.id === 'closeAddressBtn') {
+        hideAddressModal();
+      }
+      
+      // 复制地址按钮
+      if (event.target.classList.contains('copy-address-btn-dynamic')) {
+        const address = event.target.dataset.address;
+        copyToClipboard(address, event.target);
+      }
+
+      // (***) 密码确认按钮事件 (逻辑不变) (***)
+      if (event.target.id === 'confirmBtn') {
+        const passwordInput = document.getElementById('passwordInput');
+        const errorMessage = document.getElementById('errorMessage');
+        const password = passwordInput.value.trim();
+        
+        if (!password) {
+          errorMessage.textContent = '请输入密码';
+          errorMessage.style.display = 'block';
+          return;
+        }
+
+        // 显示加载状态
+        const confirmBtn = event.target;
+        const originalText = confirmBtn.textContent;
+        confirmBtn.textContent = '验证中...';
+        confirmBtn.disabled = true;
+
+        try {
+          // (新) 再次调用查询, 这次一定是用用户输入的密码
+          const result = await queryServerAddress(currentServerIndex, password);
+          
+          if (result.success) {
+            // 保存密码（如果勾选了记住密码）
+            savePassword(password);
+            hidePasswordModal();
+            showAddressModal(currentServerName, result.addresses);
+          } else {
+            errorMessage.textContent = result.error;
+            errorMessage.style.display = 'block';
+          }
+        } catch (error) {
+          errorMessage.textContent = '请求失败，请稍后再试';
+          errorMessage.style.display = 'block';
+        } finally {
+          confirmBtn.textContent = originalText;
+          confirmBtn.disabled = false;
+        }
+      }
+    });
+
+
+    // 回车键确认密码 (逻辑不变)
+    document.addEventListener('keypress', function(event) {
+      if (event.key === 'Enter' && document.getElementById('passwordModal').style.display === 'block') {
+        const confirmBtn = document.getElementById('confirmBtn');
+        if (confirmBtn && !confirmBtn.disabled) {
+          confirmBtn.click();
+        }
+      }
+    });
+
+      // --- 友人帐皮肤加载函数 ---
+    async function fetchFriendSkins(apiData) { 
+    const skinGallery = document.getElementById('friends-skin-gallery');
+        if (!skinGallery) {
+            console.warn('友人帐皮肤容器 "friends-skin-gallery" 未找到。');
+            return;
+        }
+
+    try {
+      console.log('开始处理友人帐皮肤数据...');
+      if (apiData && apiData.server_info && apiData.server_info.friend && Array.isArray(apiData.server_info.friend)) {
+        const friends = apiData.server_info.friend;
+        skinGallery.innerHTML = ''; 
+
+                if (friends.length === 0) {
+                    skinGallery.textContent = '暂无友人帐信息。';
+                    console.log('友人帐列表为空。');
+                    return;
+                }
+                console.log('获取到的友人帐列表:', friends);
+
+        friends.forEach(username => {
+          if (typeof username !== 'string' || username.trim() === '') {
+                        console.warn('无效的友人帐用户名:', username);
+                        return; 
+                    }
+                    console.log(`正在处理用户: ${username}`);
+          const skinItem = document.createElement('div');
+          skinItem.classList.add('skin-item');
+
+          const img = document.createElement('img');
+          img.src = `https://nmsr.nickac.dev/fullbody/${encodeURIComponent(username)}`;
+          img.alt = `${username} 的皮肤`;
+                    img.title = `${username} 的皮肤`;
+          img.onload = () => console.log(`皮肤加载成功: ${username}`);
+          img.onerror = function() {
+                        console.error(`皮肤加载失败: ${username}. URL: ${this.src}`);
+                        this.src = 'https://placehold.co/100x200/222/fff?text=Loading%20failed';
+                        this.alt = '加载失败';
+                    };
+
+          const nameParagraph = document.createElement('p');
+          nameParagraph.textContent = username;
+
+          skinItem.appendChild(img);
+          skinItem.appendChild(nameParagraph);
+          skinGallery.appendChild(skinItem);
+          console.log(`已添加用户 ${username} 的皮肤元素到页面`);
+        });
+        console.log('友人帐皮肤加载完成。');
+      } else {
+        console.error('API 数据中未找到有效的友人帐信息 (server_info.friend):', apiData);
+        skinGallery.textContent = '无法加载友人帐信息或格式不正确。';
+      }
+    } catch (error) {
+      console.error('处理友人帐皮肤数据时发生错误:', error);
+      skinGallery.textContent = '加载友人帐皮肤时发生错误。';
+    }
+  }
+  </script>
+</body>
 </html>
