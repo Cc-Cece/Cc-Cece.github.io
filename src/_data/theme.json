@@ -1,0 +1,34 @@
+{
+  "siteDescription": "How is this working at all?!",
+  "showFeatureImage": true,
+  "archivesPageSize": 50,
+  "postPageSize": 10,
+  "customConfig": {
+    "contentBgColor": "#ffffff",
+    "contentMaxWidth": "800px",
+    "customCss": "",
+    "discord": "https://discord.gg/WFrNd95j",
+    "facebook": "",
+    "ga": "",
+    "github": "https://github.com/Cc-Cece",
+    "linkColor": "rgba(0,0,0,.98)",
+    "linkHoverColor": "#006CFF",
+    "mail": "mailto:suyu041219@gmail.com?subject=From Ceceport's Blog",
+    "metaDescription": "",
+    "openPostToc": true,
+    "showAbstract": true,
+    "showComment": true,
+    "twikooEnvId": "https://ceceport.netlify.app/.netlify/functions/twikoo",
+    "twikooRegion": "",
+    "pageBgColor": "#ffffff",
+    "qq": "https://github.com/Cc-Cece",
+    "siteFont": "-apple-system,BlinkMacSystemFont,'Helvetica Neue','PingFang SC','Hiragino Sans GB','Droid Sans Fallback','Microsoft YaHei',sans-serif",
+    "textColor": "rgba(0, 0, 0, 0.86)",
+    "textSize": "16px",
+    "titleAlign": "left",
+    "twitter": "",
+    "weibo": "",
+    "zhihu": ""
+  }
+}
+

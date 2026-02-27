@@ -1,0 +1,48 @@
+---
+permalink: "/tags/"
+---
+<html lang="zh-CN">
+  <head>
+    <%- include('_includes/partials/head', { siteTitle: 'Tags | ' + site.siteName, description: theme.customConfig.metaDescription || theme.siteDescription, site, theme, page, basePath }) %>
+  </head>
+  <body>
+    <script>
+      (function() {
+        try {
+          var stored = localStorage.getItem('theme');
+          if (stored === 'light' || stored === 'dark') {
+            document.body.setAttribute('data-theme', stored);
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <div class="main">
+      <a class="skip-link" href="#main-content">跳到正文</a>
+      <div class="main-content" id="main-content" data-pagefind-body>
+        <%- include('_includes/partials/header') %>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">Tags</h2>
+            <div class="post-content">
+              <ul>
+                <% const tagSet = new Set(); %>
+                <% (collections.posts || []).forEach(function(post) { %>
+                  <% (post.data.tags || []).forEach(function(tag) { tagSet.add(tag); }); %>
+                <% }); %>
+                <% Array.from(tagSet).sort().forEach(function(tag) { %>
+                  <li>
+                    <a href="<%= (basePath || '') + '/tag/' + encodeURIComponent(tag) + '/' %>"># <%= tag %></a>
+                  </li>
+                <% }); %>
+              </ul>
+            </div>
+          </article>
+        </div>
+
+        <%- include('_includes/partials/footer') %>
+      </div>
+    </div>
+  </body>
+</html>
+

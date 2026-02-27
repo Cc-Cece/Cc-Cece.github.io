@@ -1,0 +1,33 @@
+---
+permalink: /404.html
+eleventyExcludeFromCollections: true
+---
+<html lang="zh-CN">
+  <head>
+    <%- include('_includes/partials/head', { siteTitle: '404 | ' + site.siteName, description: theme.customConfig.metaDescription || theme.siteDescription, site, theme, page, basePath }) %>
+  </head>
+  <body>
+    <script>
+      (function() {
+        try {
+          var stored = localStorage.getItem('theme');
+          if (stored === 'light' || stored === 'dark') {
+            document.body.setAttribute('data-theme', stored);
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <div class="main">
+      <a class="skip-link" href="#main-content">跳到正文</a>
+      <div class="main-content" id="main-content" data-pagefind-body>
+        <%- include('_includes/partials/header') %>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px;text-align:center;">
+          <h1 style="font-size:5em;margin-bottom:16px;color:#a23636;">404</h1>
+          <p style="font-size:1.2em;color:#868e96;margin-bottom:32px;">Page not found</p>
+          <a href="<%= (basePath || '') + '/' %>" style="padding:10px 24px;border:2px solid rgb(162,54,54);border-radius:10px;color:#fff;background:#121212;">Back to Home</a>
+        </div>
+        <%- include('_includes/partials/footer') %>
+      </div>
+    </div>
+  </body>
+</html>

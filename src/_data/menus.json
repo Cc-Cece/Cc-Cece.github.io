@@ -1,0 +1,22 @@
+[
+  {
+    "link": "/",
+    "name": "Home",
+    "openType": "Internal"
+  },
+  {
+    "link": "/archives",
+    "name": "Archives",
+    "openType": "Internal"
+  },
+  {
+    "link": "/post/about",
+    "name": "About",
+    "openType": "Internal"
+  },
+  {
+    "link": "/search/",
+    "name": "Search",
+    "openType": "Internal"
+  }
+]

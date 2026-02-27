@@ -1,0 +1,40 @@
+---
+pagination:
+  data: collections.tagList
+  size: 1
+  alias: tagData
+permalink: "/tag/<%= encodeURIComponent(tagData.name) %>/"
+---
+<html lang="zh-CN">
+  <head>
+    <%- include('_includes/partials/head', { siteTitle: `# ${tagData.name} | ${site.siteName}`, description: theme.customConfig.metaDescription || theme.siteDescription, site, theme, page, basePath }) %>
+  </head>
+  <body>
+    <script>
+      (function() {
+        try {
+          var stored = localStorage.getItem('theme');
+          if (stored === 'light' || stored === 'dark') {
+            document.body.setAttribute('data-theme', stored);
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <div class="main">
+      <a class="skip-link" href="#main-content">跳到正文</a>
+      <div class="main-content" id="main-content" data-pagefind-body>
+        <%- include('_includes/partials/header') %>
+
+        <div class="current-tag-container">
+          <h2 class="title">
+            标签：# <%= tagData.name %>
+          </h2>
+        </div>
+
+        <%- include('_includes/partials/post-list', { posts: tagData.posts }) %>
+
+        <%- include('_includes/partials/footer') %>
+      </div>
+    </div>
+  </body>
+</html>

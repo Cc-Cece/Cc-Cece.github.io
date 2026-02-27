@@ -1,0 +1,33 @@
+---
+permalink: /atom.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <%
+    const _base = (site && site.domain) ? site.domain.replace(/\/$/, '') : '';
+    const _path = (basePath || '');
+  %>
+  <id><%= _base %><%= _path %>/</id>
+  <title><%- site.siteName %></title>
+  <updated><%= new Date().toISOString() %></updated>
+  <link rel="alternate" href="<%= _base %><%= _path %>/"/>
+  <link rel="self" href="<%= _base %><%= _path %>/atom.xml"/>
+  <subtitle><%- theme.siteDescription %></subtitle>
+  <icon><%= _base %><%= _path %>/favicon.ico</icon>
+  <% const feedPosts = (collections.postsChrono || collections.posts || []).slice(0, site.feedCount || 10); %>
+  <% feedPosts.forEach(function(post) { %>
+  <entry>
+    <title type="html"><![CDATA[<%= post.data.title %>]]></title>
+    <id><%= _base %><%= _path %><%= post.url %></id>
+    <link href="<%= _base %><%= _path %><%= post.url %>"/>
+    <updated><%= post.date.toISOString() %></updated>
+    <% (post.data.tags || []).forEach(function(tag) { %>
+    <category term="<%= tag %>"/>
+    <% }); %>
+    <% if (post.data.abstract) { %>
+    <summary type="html"><![CDATA[<%- post.data.abstract %>]]></summary>
+    <% } %>
+  </entry>
+  <% }); %>
+</feed>

@@ -1,0 +1,48 @@
+<div class="site-footer">
+  <%- theme.footerInfo || "" %>
+  <div class="menu-container">
+    <% ((typeof menus !== 'undefined' && Array.isArray(menus)) ? menus : []).forEach(function(menu) { %>
+      <% if (menu.openType === 'External') { %>
+        <a href="<%= menu.link %>" class="menu" target="_blank" rel="noopener">
+          <%= menu.name %>
+        </a>
+      <% } else { %>
+        <a href="<%= (basePath || '') + menu.link %>" class="menu">
+          <%= menu.name %>
+        </a>
+      <% } %>
+    <% }); %>
+  </div>
+  <div class="social-container">
+    <% ['github', 'twitter', 'discord', 'mail', 'facebook'].forEach((item) => { %>
+      <% if (theme.customConfig && theme.customConfig[item]) { %>
+        <a href="<%= theme.customConfig[item] %>" target="_blank" rel="noopener" aria-label="<%= item %>">
+          <i class="ri-<%= item %>-line"></i>
+        </a>
+      <% } %>
+    <% }) %>
+  </div>
+  <a class="rss" href="<%= (basePath || '') + '/atom.xml' %>" target="_blank" aria-label="RSS">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+<script>
+  (function () {
+    var btn = document.querySelector('.theme-toggle');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      try {
+        var current = document.body.getAttribute('data-theme');
+        var next = current === 'light' ? 'dark' : 'light';
+        if (!current) {
+          var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          next = prefersDark ? 'light' : 'dark';
+        }
+        document.body.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      } catch (e) {}
+    });
+  })();
+</script>
+

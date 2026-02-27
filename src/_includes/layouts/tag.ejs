@@ -1,0 +1,33 @@
+<html lang="zh-CN">
+  <head>
+    <%- include('../partials/head', { siteTitle: `# ${tagName} | ${site.siteName}`, description: theme.customConfig.metaDescription || theme.siteDescription, site, theme, page, basePath }) %>
+  </head>
+  <body>
+    <script>
+      (function() {
+        try {
+          var stored = localStorage.getItem('theme');
+          if (stored === 'light' || stored === 'dark') {
+            document.body.setAttribute('data-theme', stored);
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <div class="main">
+      <a class="skip-link" href="#main-content">跳到正文</a>
+      <div class="main-content" id="main-content" data-pagefind-body>
+        <%- include('../partials/header') %>
+
+        <div class="current-tag-container">
+          <h2 class="title">
+            标签：# <%= tagName %>
+          </h2>
+        </div>
+
+        <%- include('../partials/post-list', { posts: tagPosts }) %>
+
+        <%- include('../partials/footer') %>
+      </div>
+    </div>
+  </body>
+</html>

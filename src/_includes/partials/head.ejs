@@ -1,0 +1,54 @@
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<%
+  const _title = (typeof siteTitle !== 'undefined' && siteTitle) ? siteTitle : (site && site.siteName ? site.siteName : '');
+  const _descFallback = (theme && theme.customConfig && theme.customConfig.metaDescription) ? theme.customConfig.metaDescription : ((theme && theme.siteDescription) ? theme.siteDescription : (site && site.siteDescription ? site.siteDescription : ''));
+  const _desc = (typeof description !== 'undefined' && description) ? description : _descFallback;
+  const _base = (site && site.domain) ? site.domain.replace(/\/$/, '') : '';
+  const _canonical = (typeof canonical !== 'undefined' && canonical)
+    ? canonical
+    : (_base ? (_base + (basePath || '') + page.url) : ((basePath || '') + page.url));
+  const _ogType = (typeof ogType !== 'undefined' && ogType) ? ogType : "website";
+  const _ogImage = (typeof ogImage !== 'undefined' && ogImage) ? ogImage : "";
+%>
+<title><%= _title %></title>
+<meta name="description" content="<%= _desc %>" />
+<link rel="canonical" href="<%= _canonical %>" />
+
+<meta property="og:title" content="<%= _title %>" />
+<meta property="og:description" content="<%= _desc %>" />
+<meta property="og:type" content="<%= _ogType %>" />
+<meta property="og:url" content="<%= _canonical %>" />
+<% if (_ogImage) { %>
+<meta property="og:image" content="<%= _ogImage %>" />
+<% } %>
+<% if (site && site.siteName) { %>
+<meta property="og:site_name" content="<%= site.siteName %>" />
+<% } %>
+
+<meta name="twitter:card" content="<%= _ogImage ? 'summary_large_image' : 'summary' %>" />
+<meta name="twitter:title" content="<%= _title %>" />
+<meta name="twitter:description" content="<%= _desc %>" />
+<% if (_ogImage) { %>
+<meta name="twitter:image" content="<%= _ogImage %>" />
+<% } %>
+
+<% if (_base) { %>
+<script type="application/ld+json">
+<%- JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": site && site.siteName ? site.siteName : _title,
+  "url": _base + (basePath || "") + "/",
+  "description": _desc
+}) %>
+</script>
+<% } %>
+
+<link rel="shortcut icon" href="<%= (basePath || '') + '/favicon.ico' %>">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="<%= (basePath || '') + '/styles/main.css' %>">
+<link rel="alternate" type="application/atom+xml" title="<%= _title %> - Atom Feed" href="<%= _base ? (_base + (basePath || '') + '/atom.xml') : ((basePath || '') + '/atom.xml') %>">
+

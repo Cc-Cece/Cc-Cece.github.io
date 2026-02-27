@@ -1,0 +1,19 @@
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="<%= (basePath || '') + '/' %>" class="site-logo-link">
+      <img class="avatar header-face-logo" src="https://nmsr.nickac.dev/face/Ceceport" alt="<%= site.siteName %>">
+    </a>
+    <div class="header-text">
+      <h1 class="site-title">
+        <%= site.siteName %>
+      </h1>
+      <p class="site-description tagline">
+        <%- theme.siteDescription %>
+      </p>
+    </div>
+  </div>
+  <button class="theme-toggle header-theme-toggle" type="button" aria-label="切换深浅色模式">
+    <i class="ri-moon-line"></i>
+  </button>
+</header>
+

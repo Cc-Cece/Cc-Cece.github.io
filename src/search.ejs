@@ -1,0 +1,58 @@
+---
+permalink: "/search/"
+eleventyExcludeFromCollections: true
+---
+<html lang="zh-CN">
+  <head>
+    <%- include('_includes/partials/head', { siteTitle: 'Search | ' + site.siteName, description: theme.customConfig.metaDescription || theme.siteDescription, site, theme, page, basePath }) %>
+    <link rel="stylesheet" href="<%= (basePath || '') + '/pagefind-ui/pagefind-ui.css' %>">
+  </head>
+  <body>
+    <script>
+      (function() {
+        try {
+          var stored = localStorage.getItem('theme');
+          if (stored === 'light' || stored === 'dark') {
+            document.body.setAttribute('data-theme', stored);
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <div class="main">
+      <a class="skip-link" href="#main-content">跳到正文</a>
+      <div class="main-content" id="main-content" data-pagefind-body>
+        <%- include('_includes/partials/header') %>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">Search</h2>
+            <div class="post-content">
+              <div id="search"></div>
+            </div>
+          </article>
+        </div>
+
+        <%- include('_includes/partials/footer') %>
+      </div>
+    </div>
+
+    <script src="<%= (basePath || '') + '/pagefind-ui/pagefind-ui.js' %>"></script>
+    <script>
+      window.addEventListener('DOMContentLoaded', function () {
+        if (!window.PagefindUI) return;
+        new PagefindUI({
+          element: "#search",
+          showSubResults: true,
+          translations: {
+            placeholder: "Search…",
+            clear_search: "Clear",
+            load_more: "Load more results",
+            search_label: "Search this site"
+          },
+          processTerm: function (term) { return term.trim(); }
+        });
+      });
+    </script>
+  </body>
+</html>
+

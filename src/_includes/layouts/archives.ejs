@@ -1,0 +1,45 @@
+<html lang="zh-CN">
+  <head>
+    <%- include('../partials/head', { siteTitle: 'Archives | ' + site.siteName, description: theme.customConfig.metaDescription || theme.siteDescription, site, theme, page, basePath }) %>
+  </head>
+  <body>
+    <script>
+      (function() {
+        try {
+          var stored = localStorage.getItem('theme');
+          if (stored === 'light' || stored === 'dark') {
+            document.body.setAttribute('data-theme', stored);
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <div class="main">
+      <a class="skip-link" href="#main-content">跳到正文</a>
+      <div class="main-content" id="main-content" data-pagefind-body>
+        <%- include('../partials/header') %>
+        <div class="archives-container">
+          <%
+            const _archivePosts = collections.posts || [];
+            const _years = [...new Set(_archivePosts.map(p => {
+              const d = p.date instanceof Date ? p.date : new Date(p.date);
+              return d.getFullYear();
+            }))].sort((a, b) => b - a);
+          %>
+          <% _years.forEach(function(year) { %>
+            <h2 class="year"><%= year %></h2>
+            <% _archivePosts.filter(p => {
+              const d = p.date instanceof Date ? p.date : new Date(p.date);
+              return d.getFullYear() === year;
+            }).forEach(function(post) { %>
+              <a class="post" href="<%= (basePath || '') + post.url %>">
+                <h2 class="post-title"><%= post.data.title %></h2>
+                <div class="time"><%= (post.date instanceof Date ? post.date : new Date(post.date)).toISOString().slice(0, 10) %></div>
+              </a>
+            <% }); %>
+          <% }); %>
+        </div>
+        <%- include('../partials/footer') %>
+      </div>
+    </div>
+  </body>
+</html>

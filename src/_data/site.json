@@ -1,0 +1,11 @@
+{
+  "siteName": "Ceceport's Blog",
+  "author": "Ceceport",
+  "siteDescription": "How is this working at all?!",
+  "domain": "https://cc.akihito.dpdns.org",
+  "archivesPath": "archives",
+  "postPath": "post",
+  "tagPath": "tag",
+  "feedCount": 10
+}
+

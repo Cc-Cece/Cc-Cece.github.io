@@ -1,0 +1,7 @@
+---
+layout: layouts/home.ejs
+pagination:
+  data: collections.posts
+  size: 10
+permalink: "/<%= pagination.pageNumber > 0 ? 'page/' + (pagination.pageNumber + 1) + '/' : '' %>"
+---

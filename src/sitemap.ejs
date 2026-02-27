@@ -1,0 +1,25 @@
+---
+permalink: /sitemap.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="utf-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <%
+    const _base = (site && site.domain) ? site.domain.replace(/\/$/, '') : '';
+    const _path = (basePath || '');
+  %>
+  <url>
+    <loc><%= _base %><%= _path %>/</loc>
+    <lastmod><%= new Date().toISOString().slice(0, 10) %></lastmod>
+  </url>
+  <url>
+    <loc><%= _base %><%= _path %>/archives/</loc>
+    <lastmod><%= new Date().toISOString().slice(0, 10) %></lastmod>
+  </url>
+  <% (collections.postsChrono || collections.posts || []).forEach(function(post) { %>
+  <url>
+    <loc><%= _base %><%= _path %><%= post.url %></loc>
+    <lastmod><%= (post.date instanceof Date ? post.date : new Date(post.date)).toISOString().slice(0, 10) %></lastmod>
+  </url>
+  <% }); %>
+</urlset>

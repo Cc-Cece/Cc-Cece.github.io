@@ -1,0 +1,27 @@
+{
+  "name": "ceceport-blog-11ty",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "eleventy --serve --config=eleventy.config.cjs",
+    "build": "cross-env ELEVENTY_ENV=production eleventy --config=eleventy.config.cjs",
+    "postbuild": "node scripts/postbuild.cjs"
+  },
+  "dependencies": {
+    "@11ty/eleventy": "^2.0.0",
+    "markdown-it": "^14.1.0",
+    "markdown-it-anchor": "^9.0.0",
+    "markdown-it-footnote": "^4.0.0",
+    "markdown-it-katex": "^2.0.3",
+    "markdown-it-toc-done-right": "^4.2.0"
+  },
+  "devDependencies": {
+    "@11ty/eleventy-img": "*",
+    "@pagefind/default-ui": "*",
+    "clean-css": "*",
+    "cross-env": "*",
+    "html-minifier-terser": "*",
+    "node-html-parser": "*",
+    "pagefind": "*"
+  }
+}

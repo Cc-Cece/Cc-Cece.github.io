@@ -1,0 +1,330 @@
+<html lang="zh-CN">
+  <head>
+    <%
+      const _desc = (typeof description !== 'undefined' && description) ? description : (theme.customConfig.metaDescription || theme.siteDescription);
+      const _base = (site && site.domain) ? site.domain.replace(/\/$/, '') : '';
+      const _feature = (typeof feature !== 'undefined' && feature) ? feature : "";
+      const _ogImage = (theme.showFeatureImage && _feature)
+        ? ((/^https?:\/\//i.test(_feature) || _feature.startsWith('//')) ? _feature : (_base ? (_base + (basePath || '') + _feature) : ((basePath || '') + _feature)))
+        : "";
+      const _pageUrl = _base ? (_base + (basePath || '') + page.url) : ((basePath || '') + page.url);
+      const _dateIso = (date instanceof Date ? date : new Date(date)).toISOString();
+    %>
+    <%- include('../partials/head', { siteTitle: `${title} | ${site.siteName}`, description: _desc, ogType: 'article', ogImage: _ogImage, site, theme, page, basePath }) %>
+    <% if (tags && tags.length) { %>
+      <meta name="keywords" content="<%- tags.join(',') %>" />
+    <% } %>
+    <script type="application/ld+json">
+    <%- JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": title,
+      "description": _desc,
+      "image": _ogImage || undefined,
+      "datePublished": _dateIso,
+      "dateModified": _dateIso,
+      "author": { "@type": "Person", "name": site && site.siteName ? site.siteName : "" },
+      "mainEntityOfPage": { "@type": "WebPage", "@id": _pageUrl }
+    }) %>
+    </script>
+    <% const _hasMath = /(\$\$[\s\S]+?\$\$)|\\\(|\\\[|(\$[^$]+\$)/.test(content || ""); %>
+    <% if (_hasMath) { %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
+    <% } %>
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <script>
+      (function() {
+        try {
+          var stored = localStorage.getItem('theme');
+          if (stored === 'light' || stored === 'dark') {
+            document.body.setAttribute('data-theme', stored);
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <div class="main">
+      <a class="skip-link" href="#main-content">跳到正文</a>
+      <div class="main-content" id="main-content" data-pagefind-body>
+        <%- include('../partials/header') %>
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              <%= title %>
+            </h2>
+            <div class="post-info">
+              <span>
+                <%= (date instanceof Date ? date.toISOString().slice(0, 10) : String(date).slice(0, 10)) %>
+              </span>
+              <% const _rt = Math.max(1, Math.round((content || '').replace(/<[^>]+>/g, '').length / 400)); %>
+              <span><%= _rt %> min read</span>
+              <% (tags || []).forEach(function(tag) { %>
+                <a href="<%= (basePath || '') + '/tag/' + encodeURIComponent(tag) + '/' %>" class="post-tag">
+                  # <%= tag %>
+                </a>
+              <% }); %>
+            </div>
+            <% if (theme.showFeatureImage && _feature) { %>
+              <img class="post-feature-image" src="<%= _feature %>" alt="<%= title %>">
+            <% } %>
+              <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <%- content %>
+              </div>
+              <% if (theme.customConfig.openPostToc) { %>
+              <div class="toc-container">
+                <%
+                  const _tocItems = [];
+                  const _hRe = /<h([1-6])[^>]*\sid="([^"]+)"[^>]*>([\s\S]*?)<\/h[1-6]>/g;
+                  let _hm;
+                  while ((_hm = _hRe.exec(content)) !== null) {
+                    _tocItems.push({
+                      level: parseInt(_hm[1]),
+                      id: _hm[2],
+                      text: _hm[3].replace(/<[^>]+>/g, '').trim()
+                    });
+                  }
+                  // 计算最小层级，用于缩进归零
+                  const _minLevel = _tocItems.length ? Math.min.apply(null, _tocItems.map(function(t){ return t.level; })) : 1;
+                %>
+                <% if (_tocItems.length > 0) { %>
+                <ul class="markdownIt-TOC">
+                  <% _tocItems.forEach(function(item) { %>
+                  <li style="<%= (item.level - _minLevel) > 0 ? 'padding-left:' + (item.level - _minLevel) * 16 + 'px' : '' %>">
+                    <a href="#<%= item.id %>"><%= item.text %></a>
+                  </li>
+                  <% }); %>
+                </ul>
+                <% } %>
+              </div>
+              <% } %>
+            </div>
+          </article>
+
+          <div class="post-meta-footer" style="font-size: 0.9em; line-height: 1.6; margin-top: 2rem; border-top: 1px dashed #ccc; padding-top: 1rem;">
+            <p style="margin: 4px 0;">
+              <% const _authorName = (typeof author !== 'undefined' && author) ? author : (site.author || site.siteName); %>
+              <strong>本文作者：</strong><%= _authorName %>
+            </p>
+            
+            <p style="margin: 4px 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+              <strong>文章链接：</strong>
+              <% const _fullUrl = (site && site.domain ? site.domain.replace(/\/$/, '') : '') + (basePath || '') + page.url; %>
+              <a href="<%= _fullUrl %>" style="color: inherit;"><%= _fullUrl %></a>
+            </p>
+          
+            <div style="margin: 4px 0; white-space: nowrap; display: flex; align-items: center; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none;">
+              <strong style="flex-shrink: 0;">版权声明：</strong>
+              <span style="opacity: 0.7; margin-left: 4px; flex-shrink: 0;">本文采用</span>
+              
+              <% if (typeof license !== 'undefined' && license) { %>
+                  <span style="margin-left: 4px;"><%- license %></span>
+                  <span style="opacity: 0.7; margin-left: 4px; flex-shrink: 0;">共享协议</span>
+              <% } else { %>
+                  <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" 
+                     style="text-decoration: none; color: inherit; display: inline-flex; align-items: center; gap: 6px; margin-left: 4px; flex-shrink: 0;">
+                      
+                      <span style="display: inline-flex; align-items: center; gap: 2px;">
+                        <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" style="height: 1.2em; width: auto; filter: invert(var(--cc-invert, 0)); vertical-align: middle;">
+                        <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" style="height: 1.2em; width: auto; filter: invert(var(--cc-invert, 0)); vertical-align: middle;">
+                        <img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" style="height: 1.2em; width: auto; filter: invert(var(--cc-invert, 0)); vertical-align: middle;">
+                        <img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" style="height: 1.2em; width: auto; filter: invert(var(--cc-invert, 0)); vertical-align: middle;">
+                      </span>
+          
+                      <strong style="flex-shrink: 0;">CC BY-NC-SA 4.0 共享协议</strong>
+                  </a>
+                  <span style="opacity: 0.7; margin-left: 4px; flex-shrink: 0;">（转载请注明出处）</span>
+              <% } %>
+            </div>
+          </div>
+
+          <%
+            const _allPosts = collections.postsChrono || collections.posts;
+            const _idx = _allPosts.findIndex(p => p.url === page.url);
+            const _prevPost = _idx < _allPosts.length - 1 ? _allPosts[_idx + 1] : null;
+            const _nextPost = _idx > 0 ? _allPosts[_idx - 1] : null;
+          %>
+          <% if (_prevPost || _nextPost) { %>
+          <div class="post-nav">
+            <div class="post-nav-col">
+              <% if (_prevPost) { %>
+              <a href="<%= (basePath || '') + _prevPost.url %>" class="post-nav-item post-nav-prev">
+                <span class="post-nav-arrow">&larr;</span>
+                <div class="post-nav-text">
+                  <div class="post-nav-label">上一篇</div>
+                  <div class="post-nav-title"><%= _prevPost.data.title %></div>
+                </div>
+              </a>
+              <% } %>
+            </div>
+            <div class="post-nav-col">
+              <% if (_nextPost) { %>
+              <a href="<%= (basePath || '') + _nextPost.url %>" class="post-nav-item post-nav-next">
+                <span class="post-nav-arrow">&rarr;</span>
+                <div class="post-nav-text">
+                  <div class="post-nav-label">下一篇</div>
+                  <div class="post-nav-title"><%= _nextPost.data.title %></div>
+                </div>
+              </a>
+              <% } %>
+            </div>
+          </div>
+          <% } %>
+
+          <% if (theme.customConfig.showComment && theme.customConfig.twikooEnvId) { %>
+          <div class="post-comment" id="tcomment"></div>
+          <% } %>
+        </div>
+
+        <%- include('../partials/footer') %>
+      </div>
+    </div>
+
+    <script>
+      hljs.highlightAll();
+
+      // Code copy button
+      document.querySelectorAll('pre code').forEach(function(codeBlock) {
+        var container = document.createElement('div');
+        container.className = 'code-container';
+        var button = document.createElement('button');
+        button.className = 'copy-button';
+        button.setAttribute('type', 'button');
+        button.setAttribute('aria-label', '复制代码');
+        button.textContent = 'copy';
+        codeBlock.parentNode.insertBefore(container, codeBlock);
+        container.appendChild(codeBlock);
+        container.appendChild(button);
+      });
+      document.querySelectorAll('.copy-button').forEach(function(copyButton) {
+        copyButton.addEventListener('click', function() {
+          var codeBlock = copyButton.parentNode.querySelector('code');
+          if (codeBlock) {
+            navigator.clipboard.writeText(codeBlock.innerText).then(function() {
+              var originalText = copyButton.textContent;
+              copyButton.textContent = 'copied!';
+              setTimeout(function() { copyButton.textContent = originalText; }, 2000);
+            }).catch(function() { copyButton.textContent = 'failed!'; });
+          }
+        });
+      });
+
+      // Ctrl+A select code block
+      document.addEventListener('keydown', function(event) {
+        if ((event.ctrlKey || event.metaKey) && (event.key === 'a' || event.key === 'A')) {
+          var selection = window.getSelection();
+          if (selection.rangeCount > 0) {
+            var range = selection.getRangeAt(0);
+            var element = range.commonAncestorContainer;
+            var targetCodeBlock = null;
+            while (element) {
+              if (element.tagName === 'CODE') { targetCodeBlock = element; break; }
+              element = element.parentElement;
+            }
+            if (targetCodeBlock) {
+              event.preventDefault();
+              var newRange = document.createRange();
+              newRange.selectNodeContents(targetCodeBlock);
+              selection.removeAllRanges();
+              selection.addRange(newRange);
+            }
+          }
+        }
+      });
+
+      // TOC scroll highlight
+      (function () {
+        var tocLinks = Array.prototype.slice.call(document.querySelectorAll(".markdownIt-TOC a"));
+        if (!tocLinks.length) return;
+
+        // 构建 TOC link 与对应 heading 的映射
+        var items = [];
+        tocLinks.forEach(function (link) {
+          // 用 getAttribute 取原始 href，保留 percent-encoding
+          var raw = (link.getAttribute("href") || "").replace(/^#/, "");
+          var el = document.getElementById(raw);
+          // 兜底：如果 id 实际是解码后的字符串
+          if (!el) {
+            try { el = document.getElementById(decodeURIComponent(raw)); } catch (e) {}
+          }
+          if (el) items.push({ link: link, el: el, id: el.id });
+        });
+        if (!items.length) return;
+
+        var currentId = null;
+        var OFFSET = 80; // heading 距视口顶部多少 px 内算"已到达"
+        var ticking = false;
+
+        function setActive(id) {
+          if (id === currentId) return;
+          currentId = id;
+          items.forEach(function (item) {
+            if (item.id === id) {
+              item.link.classList.add("current");
+              // 让 TOC 容器自动滚动到当前高亮项可见
+              var tocContainer = item.link.closest(".markdownIt-TOC");
+              if (tocContainer && tocContainer.scrollHeight > tocContainer.clientHeight) {
+                item.link.scrollIntoView({ block: "nearest" });
+              }
+            } else {
+              item.link.classList.remove("current");
+            }
+          });
+        }
+
+        function update() {
+          // 是否已滚动到页面底部（留 2px 容差）
+          var atBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 2);
+          if (atBottom) {
+            setActive(items[items.length - 1].id);
+            return;
+          }
+
+          // 找到最后一个已经滚过 OFFSET 线的 heading
+          var activeId = null;
+          for (var i = 0; i < items.length; i++) {
+            var rect = items[i].el.getBoundingClientRect();
+            if (rect.top <= OFFSET) {
+              activeId = items[i].id;
+            } else {
+              break; // heading 是按文档顺序排列的，后面的一定更靠下
+            }
+          }
+
+          // 尚未滚到任何 heading 时，始终高亮第一个
+          if (activeId === null) {
+            activeId = items[0].id;
+          }
+
+          setActive(activeId);
+        }
+
+        // 使用 rAF 节流，避免高频 scroll 事件造成性能问题
+        window.addEventListener("scroll", function () {
+          if (!ticking) {
+            ticking = true;
+            requestAnimationFrame(function () {
+              update();
+              ticking = false;
+            });
+          }
+        }, { passive: true });
+
+        // 页面加载时立即执行一次
+        update();
+      })();
+    </script>
+    <% if (theme.customConfig.showComment && theme.customConfig.twikooEnvId) { %>
+    <script src="https://cdn.jsdelivr.net/npm/twikoo@1.6/dist/twikoo.all.min.js"></script>
+    <script>
+      twikoo.init({
+        envId: '<%= theme.customConfig.twikooEnvId %>',
+        el: '#tcomment'<% if (theme.customConfig.twikooRegion) { %>,
+        region: '<%= theme.customConfig.twikooRegion %>'<% } %>
+      });
+    </script>
+    <% } %>
+  </body>
+</html>
+

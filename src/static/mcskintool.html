@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NMSR API 交互式测试平台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+        .loader {
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 80vh;
+            max-height: 800px;
+        }
+        fieldset {
+            border: 1px solid #d1d5db;
+        }
+        .range-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .range-value {
+            min-width: 40px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="container mx-auto p-4 lg:p-8">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-900">NMSR API 交互式测试平台</h1>
+            <p class="mt-2 text-lg text-gray-600">这是一个用于探索 NMSR-RS API 的工具。您可以在左侧调整参数，并在右侧实时预览渲染结果。</p>
+        </header>
+
+        <div class="flex flex-col lg:flex-row gap-8">
+
+            <div id="controls" class="w-full lg:w-1/2 xl:w-2/5 space-y-6">
+                
+                <fieldset class="p-4 rounded-lg bg-white shadow-sm">
+                    <legend class="text-lg font-semibold px-2">基本配置</legend>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="baseUrl" class="block text-sm font-medium text-gray-700">API 地址</label>
+                            <input type="text" id="baseUrl" value="https://nmsr.nickac.dev" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                        </div>
+                        <div>
+                            <label for="player" class="block text-sm font-medium text-gray-700">玩家名 / UUID</label>
+                            <input type="text" id="player" value="Ceceport" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="p-4 rounded-lg bg-white shadow-sm">
+                    <legend class="text-lg font-semibold px-2">渲染模式</legend>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="mode" class="block text-sm font-medium text-gray-700">模式</label>
+                            <select id="mode" name="mode" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                <option value="full_body">全身像 (Full Body)</option>
+                                <option value="body_bust">胸像 (Body Bust)</option>
+                                <option value="front_full">正面全身像 (Front Full)</option>
+                                <option value="front_bust">正面胸像 (Front Bust)</option>
+                                <option value="face">脸部 (Face)</option>
+                                <option value="head">头部 (Head)</option>
+                                <option value="full_body_iso">等距全身像 (Full Body Iso)</option>
+                                <option value="head_iso">等距头部像 (Head Iso)</option>
+                                <option value="skin">皮肤文件 (Skin)</option>
+                                <option value="cape">披风文件 (Cape)</option>
+                                <option value="custom">自定义 (Custom)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="model" class="block text-sm font-medium text-gray-700">模型</label>
+                            <select id="model" name="model" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                <option value="">默认</option>
+                                <option value="wide">经典 (Wide)</option>
+                                <option value="slim">细臂 (Slim)</option>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="p-4 rounded-lg bg-white shadow-sm">
+                    <legend class="text-lg font-semibold px-2">特性开关</legend>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <label class="flex items-center"><input type="checkbox" data-feature="layers" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" checked> <span class="ml-2 text-sm">显示图层</span></label>
+                        <label class="flex items-center"><input type="checkbox" data-feature="helmet" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" checked> <span class="ml-2 text-sm">显示头盔</span></label>
+                        <label class="flex items-center"><input type="checkbox" data-feature="shadow" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" checked> <span class="ml-2 text-sm">显示阴影</span></label>
+                        <label class="flex items-center"><input type="checkbox" data-feature="shading" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" checked> <span class="ml-2 text-sm">显示着色</span></label>
+                        <label class="flex items-center"><input type="checkbox" data-feature="cape" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" checked> <span class="ml-2 text-sm">显示披风</span></label>
+                        <label class="flex items-center"><input type="checkbox" id="back" name="back" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"> <span class="ml-2 text-sm">渲染背面</span></label>
+                        <label class="flex items-center"><input type="checkbox" id="deadmau5ears" name="deadmau5ears" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"> <span class="ml-2 text-sm">Deadmau5 耳朵</span></label>
+                        <label class="flex items-center"><input type="checkbox" id="upside_down" name="upside_down" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"> <span class="ml-2 text-sm">颠倒渲染</span></label>
+                    </div>
+                </fieldset>
+
+                <fieldset class="p-4 rounded-lg bg-white shadow-sm">
+                    <legend class="text-lg font-semibold px-2 flex justify-between items-center">
+                        <span>相机与尺寸</span>
+                        <button id="resetCamera" class="text-sm text-blue-600 hover:text-blue-800 font-medium">重置</button>
+                    </legend>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label for="w" class="text-sm">宽度</label>
+                            <div class="range-container">
+                                <input type="number" id="w" name="w" placeholder="Auto" class="w-24 input" min="16" max="1024">
+                                <input type="range" id="w_range" min="16" max="1024" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label for="h" class="text-sm">高度</label>
+                            <div class="range-container">
+                                <input type="number" id="h" name="h" placeholder="Auto" class="w-24 input" min="27" max="1738">
+                                <input type="range" id="h_range" min="27" max="1738" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label for="distance" class="text-sm">距离</label>
+                            <div class="range-container">
+                                <input type="number" id="distance" name="distance" placeholder="Auto" class="w-24 input" min="0" max="50">
+                                <input type="range" id="distance_range" min="0" max="50" step="0.1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label for="y" class="text-sm">Yaw (左右)</label>
+                            <div class="range-container">
+                                <input type="number" id="y" name="y" placeholder="Auto" class="w-24 input" min="-180" max="180">
+                                <input type="range" id="y_range" min="-180" max="180" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label for="p" class="text-sm">Pitch (上下)</label>
+                            <div class="range-container">
+                                <input type="number" id="p" name="p" placeholder="Auto" class="w-24 input" min="-180" max="180">
+                                <input type="range" id="p_range" min="-180" max="180" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label for="r" class="text-sm">Roll (翻滚)</label>
+                            <div class="range-container">
+                                <input type="number" id="r" name="r" placeholder="Auto" class="w-24 input" min="-180" max="180">
+                                <input type="range" id="r_range" min="-180" max="180" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                
+                <fieldset class="p-4 rounded-lg bg-white shadow-sm">
+                    <legend class="text-lg font-semibold px-2">护甲</legend>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div><label for="helmet_armor" class="text-sm">头盔</label><select id="helmet_armor" name="helmet" class="mt-1 w-full input"><option value="">无</option><option value="le">皮革</option><option value="ch">锁链</option><option value="ir">铁</option><option value="di">钻石</option><option value="go">金</option><option value="tu">海龟壳</option><option value="ne">下界合金</option></select></div>
+                        <div><label for="chestplate" class="text-sm">胸甲</label><select id="chestplate" name="chestplate" class="mt-1 w-full input"><option value="">无</option><option value="le">皮革</option><option value="ch">锁链</option><option value="ir">铁</option><option value="di">钻石</option><option value="go">金</option><option value="ne">下界合金</option></select></div>
+                        <div><label for="leggings" class="text-sm">护腿</label><select id="leggings" name="leggings" class="mt-1 w-full input"><option value="">无</option><option value="le">皮革</option><option value="ch">锁链</option><option value="ir">铁</option><option value="di">钻石</option><option value="go">金</option><option value="ne">下界合金</option></select></div>
+                        <div><label for="boots" class="text-sm">靴子</label><select id="boots" name="boots" class="mt-1 w-full input"><option value="">无</option><option value="le">皮革</option><option value="ch">锁链</option><option value="ir">铁</option><option value="di">钻石</option><option value="go">金</option><option value="ne">下界合金</option></select></div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="p-4 rounded-lg bg-white shadow-sm">
+                    <legend class="text-lg font-semibold px-2">POST 请求 (上传文件)</legend>
+                    <p class="text-xs text-gray-500 mb-2">上传皮肤或披风文件将覆盖玩家名/UUID并使用POST方法。</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="skinFile" class="block text-sm font-medium text-gray-700">皮肤文件</label>
+                            <input type="file" id="skinFile" accept="image/png" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                        </div>
+                        <div>
+                            <label for="capeFile" class="block text-sm font-medium text-gray-700">披风文件</label>
+                            <input type="file" id="capeFile" accept="image/png" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="p-4 rounded-lg bg-gray-800 text-white shadow-sm">
+                    <label for="requestUrl" class="block text-sm font-medium text-gray-300 mb-2">生成的请求 URL</label>
+                    <div class="flex items-center gap-2">
+                        <input id="requestUrl" type="text" readonly class="w-full bg-gray-700 border-gray-600 rounded-md text-sm p-2 font-mono">
+                        <button id="copyButton" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md text-sm">复制</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="preview" class="w-full lg:w-1/2 xl:w-3/5">
+                <div class="chart-container bg-white rounded-lg shadow-sm flex items-center justify-center p-4 border border-gray-200">
+                    <div id="loader" class="loader hidden"></div>
+                    <img id="previewImage" src="" alt="API 渲染结果" class="max-w-full max-h-full object-contain">
+                    <p id="errorMessage" class="hidden text-red-500"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const controls = document.querySelectorAll('#controls input, #controls select');
+            const previewImage = document.getElementById('previewImage');
+            const errorMessage = document.getElementById('errorMessage');
+            const loader = document.getElementById('loader');
+            const requestUrlInput = document.getElementById('requestUrl');
+            const copyButton = document.getElementById('copyButton');
+            const skinFileInput = document.getElementById('skinFile');
+            const capeFileInput = document.getElementById('capeFile');
+
+            // Find all number inputs and their corresponding range inputs
+            const cameraInputs = [
+                { num: document.getElementById('w'), range: document.getElementById('w_range') },
+                { num: document.getElementById('h'), range: document.getElementById('h_range') },
+                { num: document.getElementById('distance'), range: document.getElementById('distance_range') },
+                { num: document.getElementById('y'), range: document.getElementById('y_range') },
+                { num: document.getElementById('p'), range: document.getElementById('p_range') },
+                { num: document.getElementById('r'), range: document.getElementById('r_range') }
+            ];
+
+            let debounceTimer;
+
+            const updatePreview = () => {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => {
+                    generateRequest();
+                }, 300);
+            };
+
+            const generateRequest = async () => {
+                loader.classList.remove('hidden');
+                previewImage.classList.add('hidden');
+                errorMessage.classList.add('hidden');
+
+                const baseUrl = document.getElementById('baseUrl').value;
+                const player = document.getElementById('player').value;
+                const mode = document.getElementById('mode').value;
+
+                const params = new URLSearchParams();
+                document.querySelectorAll('#controls input[type="number"], #controls select[name]').forEach(el => {
+                    if (el.value && el.name) {
+                        params.set(el.name, el.value);
+                    }
+                });
+                
+                const excludedFeatures = [];
+                document.querySelectorAll('input[data-feature]').forEach(el => {
+                    if (!el.checked) {
+                        excludedFeatures.push(el.dataset.feature);
+                    }
+                });
+
+                if (excludedFeatures.length > 0) {
+                    params.set('no', excludedFeatures.join(','));
+                }
+                
+                document.querySelectorAll('input[type="checkbox"][name]').forEach(el => {
+                    if (el.checked) {
+                        params.set(el.name, '');
+                    }
+                });
+
+                const skinFile = skinFileInput.files[0];
+                const capeFile = capeFileInput.files[0];
+
+                if (skinFile) {
+                    // POST request
+                    const formData = new FormData();
+                    params.forEach((value, key) => formData.append(key, value));
+                    formData.append('skin', skinFile);
+                    if (capeFile) {
+                        formData.append('cape', capeFile);
+                    }
+
+                    const postUrl = `${baseUrl}/${mode}`;
+                    requestUrlInput.value = `POST ${postUrl}`;
+
+                    try {
+                        const response = await fetch(postUrl, {
+                            method: 'POST',
+                            body: formData
+                        });
+                        if (!response.ok) throw new Error(`HTTP error! status: ${response.status} - ${await response.text()}`);
+                        const imageBlob = await response.blob();
+                        previewImage.src = URL.createObjectURL(imageBlob);
+                        previewImage.classList.remove('hidden');
+                    } catch (error) {
+                        errorMessage.textContent = `请求失败: ${error.message}`;
+                        errorMessage.classList.remove('hidden');
+                        previewImage.classList.add('hidden');
+                    }
+                } else {
+                    // GET request
+                    const finalUrl = `${baseUrl}/${mode}/${player}?${params.toString()}`;
+                    requestUrlInput.value = finalUrl;
+                    previewImage.src = finalUrl;
+                }
+            };
+            
+            previewImage.onload = () => {
+                loader.classList.add('hidden');
+                previewImage.classList.remove('hidden');
+                errorMessage.classList.add('hidden');
+            };
+
+            previewImage.onerror = () => {
+                loader.classList.add('hidden');
+                errorMessage.textContent = '加载图像失败。请检查 API 地址、玩家名或参数是否正确。';
+                errorMessage.classList.remove('hidden');
+                previewImage.classList.add('hidden');
+            };
+
+            // Event listeners for all controls
+            controls.forEach(control => {
+                control.addEventListener('input', updatePreview);
+            });
+
+            // Sync number inputs with range sliders
+            cameraInputs.forEach(pair => {
+                pair.num.addEventListener('input', () => {
+                    pair.range.value = pair.num.value;
+                    updatePreview();
+                });
+                pair.range.addEventListener('input', () => {
+                    pair.num.value = pair.range.value;
+                    updatePreview();
+                });
+            });
+
+            // Reset button functionality
+            document.getElementById('resetCamera').addEventListener('click', (e) => {
+                e.preventDefault(); // Prevent form submission if it's inside a form
+                cameraInputs.forEach(pair => {
+                    // Clear both number and range inputs
+                    pair.num.value = '';
+                    pair.range.value = pair.range.min;
+                });
+                updatePreview();
+            });
+
+            copyButton.addEventListener('click', () => {
+                requestUrlInput.select();
+                document.execCommand('copy');
+                copyButton.textContent = '已复制!';
+                setTimeout(() => { copyButton.textContent = '复制'; }, 2000);
+            });
+
+            // Initial load
+            generateRequest();
+        });
+    </script>
+</body>
+</html>

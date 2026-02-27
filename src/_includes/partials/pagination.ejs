@@ -1,0 +1,20 @@
+<% if (typeof pagination !== 'undefined' && pagination && pagination.hrefs && pagination.hrefs.length > 1) { %>
+  <div class="pagination-container">
+    <% if (pagination.href.previous) { %>
+      <a class="prev" href="<%= pagination.href.previous %>">上一页</a>
+    <% } %>
+
+    <% pagination.hrefs.forEach(function(href, index) { %>
+      <a
+        href="<%= href %>"
+        class="page-number <%= pagination.pageNumber === index ? 'active' : '' %>"
+      >
+        <%= index + 1 %>
+      </a>
+    <% }); %>
+
+    <% if (pagination.href.next) { %>
+      <a class="next" href="<%= pagination.href.next %>">下一页</a>
+    <% } %>
+  </div>
+<% } %>
