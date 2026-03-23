@@ -15,6 +15,15 @@
   --link-hover-color: #a23636;
   --code-bg: #121212;
   --bg-color-2: #121212;
+  --meta-footer-bg: rgba(15, 23, 42, 0.9);
+  --meta-footer-border: rgba(148, 163, 184, 0.28);
+  --meta-footer-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(148, 163, 184, 0.08);
+  --search-ui-bg: rgba(18, 18, 18, 0.92);
+  --search-ui-border: rgba(148, 163, 184, 0.28);
+  --search-ui-tag: rgba(148, 163, 184, 0.15);
+  --search-mark-bg: rgba(162, 54, 54, 0.28);
 }
 
 @media (prefers-color-scheme: light) {
@@ -27,6 +36,15 @@
     --link-hover-color: #0053c7;
     --code-bg: #121212;
     --bg-color-2: #ffffff;
+    --meta-footer-bg: rgba(255, 255, 255, 0.96);
+    --meta-footer-border: rgba(15, 23, 42, 0.08);
+    --meta-footer-shadow:
+      0 1px 2px rgba(15, 23, 42, 0.1),
+      0 1px 3px rgba(15, 23, 42, 0.08);
+    --search-ui-bg: rgba(255, 255, 255, 0.96);
+    --search-ui-border: rgba(15, 23, 42, 0.12);
+    --search-ui-tag: rgba(15, 23, 42, 0.06);
+    --search-mark-bg: rgba(0, 108, 255, 0.14);
   }
 }
 
@@ -39,6 +57,15 @@ body[data-theme='light'] {
   --link-hover-color: #0053c7;
   --code-bg: #121212;
   --bg-color-2: #ffffff;
+  --meta-footer-bg: rgba(255, 255, 255, 0.96);
+  --meta-footer-border: rgba(15, 23, 42, 0.08);
+  --meta-footer-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.1),
+    0 1px 3px rgba(15, 23, 42, 0.08);
+  --search-ui-bg: rgba(255, 255, 255, 0.96);
+  --search-ui-border: rgba(15, 23, 42, 0.12);
+  --search-ui-tag: rgba(15, 23, 42, 0.06);
+  --search-mark-bg: rgba(0, 108, 255, 0.14);
 }
 
 body[data-theme='dark'] {
@@ -50,6 +77,15 @@ body[data-theme='dark'] {
   --link-hover-color: #a23636;
   --code-bg: #121212;
   --bg-color-2: #121212;
+  --meta-footer-bg: rgba(15, 23, 42, 0.9);
+  --meta-footer-border: rgba(148, 163, 184, 0.28);
+  --meta-footer-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(148, 163, 184, 0.08);
+  --search-ui-bg: rgba(18, 18, 18, 0.92);
+  --search-ui-border: rgba(148, 163, 184, 0.28);
+  --search-ui-tag: rgba(148, 163, 184, 0.15);
+  --search-mark-bg: rgba(162, 54, 54, 0.28);
 }
 
 .skip-link {

@@ -1,11 +1,11 @@
----
+﻿---
 permalink: "/search/"
 eleventyExcludeFromCollections: true
 ---
 <html lang="zh-CN">
   <head>
     <%- include('_includes/partials/head', { siteTitle: 'Search | ' + site.siteName, description: theme.customConfig.metaDescription || theme.siteDescription, site, theme, page, basePath }) %>
-    <link rel="stylesheet" href="<%= (basePath || '') + '/pagefind-ui/pagefind-ui.css' %>">
+    <link rel="stylesheet" href="<%= (basePath || '') + '/pagefind/pagefind-ui.css' %>">
   </head>
   <body>
     <script>
@@ -20,13 +20,26 @@ eleventyExcludeFromCollections: true
     </script>
     <div class="main">
       <a class="skip-link" href="#main-content">跳到正文</a>
-      <div class="main-content" id="main-content" data-pagefind-body>
+      <div class="main-content" id="main-content" data-pagefind-ignore="all">
         <%- include('_includes/partials/header') %>
 
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">Search</h2>
             <div class="post-content">
+              <div class="search-toolbar">
+                <div class="search-scope" id="search-scope" aria-label="Search scope">
+                  <button type="button" class="search-scope-btn is-active" data-scope="all">全部</button>
+                  <button type="button" class="search-scope-btn" data-scope="title">仅标题</button>
+                  <button type="button" class="search-scope-btn" data-scope="body">仅正文</button>
+                </div>
+                <div class="search-sort" id="search-sort" aria-label="Sort order">
+                  <button type="button" class="search-sort-btn is-active" data-sort="relevance">相关度</button>
+                  <button type="button" class="search-sort-btn" data-sort="date_desc">最新</button>
+                  <button type="button" class="search-sort-btn" data-sort="date_asc">最旧</button>
+                </div>
+                <span class="search-scope-status" id="search-scope-status" aria-live="polite"></span>
+              </div>
               <div id="search"></div>
             </div>
           </article>
@@ -36,23 +49,560 @@ eleventyExcludeFromCollections: true
       </div>
     </div>
 
-    <script src="<%= (basePath || '') + '/pagefind-ui/pagefind-ui.js' %>"></script>
+    <script src="<%= (basePath || '') + '/pagefind/pagefind-ui.js' %>"></script>
     <script>
-      window.addEventListener('DOMContentLoaded', function () {
+      window.addEventListener("DOMContentLoaded", function () {
         if (!window.PagefindUI) return;
-        new PagefindUI({
+
+        var searchUI = new PagefindUI({
           element: "#search",
-          showSubResults: true,
+          bundlePath: "<%= (basePath || '') + '/pagefind/' %>",
+          showSubResults: false,
+          showImages: false,
+          excerptLength: 16,
           translations: {
-            placeholder: "Search…",
+            placeholder: "Search...",
             clear_search: "Clear",
             load_more: "Load more results",
             search_label: "Search this site"
           },
           processTerm: function (term) { return term.trim(); }
         });
+
+        var searchRoot = document.getElementById("search");
+        var scopeRoot = document.getElementById("search-scope");
+        var sortRoot = document.getElementById("search-sort");
+        var scopeStatus = document.getElementById("search-scope-status");
+        var syncTimer = null;
+        var renderTimers = [];
+
+        var STORAGE_QUERY_KEY = "search:query";
+        var STORAGE_SCOPE_KEY = "search:scope";
+        var STORAGE_SORT_KEY = "search:sort";
+
+        var POST_PATH_PREFIX = (function () {
+          var prefix = "<%= (basePath || '') + '/post/' %>";
+          prefix = prefix.replace(/\/{2,}/g, "/");
+          if (!prefix.startsWith("/")) prefix = "/" + prefix;
+          return prefix.endsWith("/") ? prefix : (prefix + "/");
+        })();
+
+        var POST_DATE_MAP = <%- JSON.stringify((collections.postsChrono || collections.posts || []).reduce(function(acc, post) {
+          var d = post.date instanceof Date ? post.date : new Date(post.date);
+          var key = ((basePath || '') + post.url)
+            .replace(/\/index\.html$/i, "/")
+            .replace(/\/+$/, "");
+          if (!key.startsWith("/")) key = "/" + key;
+          if (Number.isFinite(d.getTime())) acc[key || "/"] = d.getTime();
+          return acc;
+        }, {})) %>;
+
+        var currentScope = "all";
+        var currentSort = "relevance";
+
+        function isValidScope(scope) {
+          return scope === "all" || scope === "title" || scope === "body";
+        }
+
+        function isValidSort(sort) {
+          return sort === "relevance" || sort === "date_desc" || sort === "date_asc";
+        }
+
+        function getUrlTerm() {
+          try {
+            var params = new URLSearchParams(window.location.search);
+            return (params.get("q") || "").trim();
+          } catch (e) {
+            return "";
+          }
+        }
+
+        function getUrlScope() {
+          try {
+            var params = new URLSearchParams(window.location.search);
+            var scope = (params.get("scope") || "").trim();
+            return isValidScope(scope) ? scope : "all";
+          } catch (e) {
+            return "all";
+          }
+        }
+
+        function getUrlSort() {
+          try {
+            var params = new URLSearchParams(window.location.search);
+            var sort = (params.get("sort") || "").trim();
+            return isValidSort(sort) ? sort : "relevance";
+          } catch (e) {
+            return "relevance";
+          }
+        }
+
+        function setUrlState(term, scope, sort) {
+          try {
+            var url = new URL(window.location.href);
+            if (term) {
+              url.searchParams.set("q", term);
+            } else {
+              url.searchParams.delete("q");
+            }
+
+            if (scope && scope !== "all") {
+              url.searchParams.set("scope", scope);
+            } else {
+              url.searchParams.delete("scope");
+            }
+
+            if (sort && sort !== "relevance") {
+              url.searchParams.set("sort", sort);
+            } else {
+              url.searchParams.delete("sort");
+            }
+
+            var next = url.pathname + (url.searchParams.toString() ? ("?" + url.searchParams.toString()) : "") + url.hash;
+            var cur = window.location.pathname + window.location.search + window.location.hash;
+            if (next !== cur) {
+              window.history.replaceState(null, "", next);
+            }
+          } catch (e) {}
+        }
+
+        function getStoredTerm() {
+          try {
+            return (sessionStorage.getItem(STORAGE_QUERY_KEY) || "").trim();
+          } catch (e) {
+            return "";
+          }
+        }
+
+        function getStoredScope() {
+          try {
+            var scope = (sessionStorage.getItem(STORAGE_SCOPE_KEY) || "").trim();
+            return isValidScope(scope) ? scope : "all";
+          } catch (e) {
+            return "all";
+          }
+        }
+
+        function getStoredSort() {
+          try {
+            var sort = (sessionStorage.getItem(STORAGE_SORT_KEY) || "").trim();
+            return isValidSort(sort) ? sort : "relevance";
+          } catch (e) {
+            return "relevance";
+          }
+        }
+
+        function setStoredTerm(term) {
+          try {
+            if (term) {
+              sessionStorage.setItem(STORAGE_QUERY_KEY, term);
+            } else {
+              sessionStorage.removeItem(STORAGE_QUERY_KEY);
+            }
+          } catch (e) {}
+        }
+
+        function setStoredScope(scope) {
+          try {
+            if (scope && scope !== "all") {
+              sessionStorage.setItem(STORAGE_SCOPE_KEY, scope);
+            } else {
+              sessionStorage.removeItem(STORAGE_SCOPE_KEY);
+            }
+          } catch (e) {}
+        }
+
+        function setStoredSort(sort) {
+          try {
+            if (sort && sort !== "relevance") {
+              sessionStorage.setItem(STORAGE_SORT_KEY, sort);
+            } else {
+              sessionStorage.removeItem(STORAGE_SORT_KEY);
+            }
+          } catch (e) {}
+        }
+
+        function escapeHtml(str) {
+          return String(str)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/\"/g, "&quot;")
+            .replace(/'/g, "&#39;");
+        }
+
+        function escapeRegExp(str) {
+          return String(str).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        }
+
+        function buildTermRegex(term) {
+          var parts = String(term || "")
+            .trim()
+            .split(/\s+/)
+            .filter(Boolean)
+            .sort(function (a, b) { return b.length - a.length; })
+            .map(escapeRegExp);
+          if (!parts.length) return null;
+          return new RegExp("(" + parts.join("|") + ")", "gi");
+        }
+
+        function toHighlightedHtml(text, regex) {
+          if (!regex) return escapeHtml(text);
+          var out = "";
+          var last = 0;
+          regex.lastIndex = 0;
+          var m;
+          while ((m = regex.exec(text)) !== null) {
+            out += escapeHtml(text.slice(last, m.index));
+            out += "<mark>" + escapeHtml(m[0]) + "</mark>";
+            last = m.index + m[0].length;
+            if (regex.lastIndex === m.index) regex.lastIndex++;
+          }
+          out += escapeHtml(text.slice(last));
+          return out;
+        }
+
+        function normalizeHref(href) {
+          if (!href) return "";
+          try {
+            var url = new URL(href, window.location.origin);
+            var path = url.pathname
+              .replace(/\/index\.html$/i, "/")
+              .replace(/\/+$/, "");
+            return path || "/";
+          } catch (e) {
+            return href.replace(/[#?].*$/, "");
+          }
+        }
+
+        function isAllowedPostPath(path) {
+          if (!path) return false;
+          return path.indexOf(POST_PATH_PREFIX) === 0;
+        }
+
+        function getResultItems() {
+          if (!searchRoot) return [];
+          var list = searchRoot.querySelector(".pagefind-ui__results");
+          if (!list) return [];
+          var items = [];
+          for (var i = 0; i < list.children.length; i++) {
+            var child = list.children[i];
+            if (child.classList && child.classList.contains("pagefind-ui__result")) {
+              items.push(child);
+            }
+          }
+          return items;
+        }
+
+        function getItemTitle(item) {
+          var link = item.querySelector(".pagefind-ui__result-title .pagefind-ui__result-link");
+          if (!link) return "";
+          return (link.dataset.originalTitle || link.textContent || "").trim();
+        }
+
+        function getItemTimestamp(item) {
+          var link = item.querySelector(".pagefind-ui__result-title .pagefind-ui__result-link");
+          var key = normalizeHref(link && link.getAttribute("href"));
+          var ts = POST_DATE_MAP[key];
+          return Number.isFinite(ts) ? ts : null;
+        }
+
+        function dedupeResults() {
+          if (!searchRoot) return;
+          var items = getResultItems();
+          var seen = new Set();
+          items.forEach(function (item) {
+            var link = item.querySelector(".pagefind-ui__result-link");
+            var key = normalizeHref(link && link.getAttribute("href"));
+            if (!key) return;
+            if (!isAllowedPostPath(key)) {
+              item.remove();
+              return;
+            }
+            if (seen.has(key)) {
+              item.remove();
+              return;
+            }
+            seen.add(key);
+          });
+        }
+
+        function applySortOrder() {
+          if (!searchRoot || currentSort === "relevance") return;
+          var list = searchRoot.querySelector(".pagefind-ui__results");
+          if (!list) return;
+          var items = getResultItems();
+          items.sort(function (a, b) {
+            var ta = getItemTimestamp(a);
+            var tb = getItemTimestamp(b);
+
+            if (currentSort === "date_desc") {
+              var va = ta === null ? Number.NEGATIVE_INFINITY : ta;
+              var vb = tb === null ? Number.NEGATIVE_INFINITY : tb;
+              if (va !== vb) return vb - va;
+            }
+
+            if (currentSort === "date_asc") {
+              var xa = ta === null ? Number.POSITIVE_INFINITY : ta;
+              var xb = tb === null ? Number.POSITIVE_INFINITY : tb;
+              if (xa !== xb) return xa - xb;
+            }
+
+            return getItemTitle(a).localeCompare(getItemTitle(b));
+          });
+
+          items.forEach(function (item) {
+            list.appendChild(item);
+          });
+        }
+
+        function highlightResultTitles(term) {
+          if (!searchRoot) return;
+          var regex = buildTermRegex(term);
+          var links = searchRoot.querySelectorAll(".pagefind-ui__result-title .pagefind-ui__result-link");
+          links.forEach(function (link) {
+            if (!link.dataset.originalTitle) {
+              link.dataset.originalTitle = link.textContent || "";
+            }
+            var original = link.dataset.originalTitle;
+            if (!regex) {
+              link.textContent = original;
+              return;
+            }
+            var highlighted = toHighlightedHtml(original, regex);
+            if (link.dataset.renderedTitle !== highlighted) {
+              link.innerHTML = highlighted;
+              link.dataset.renderedTitle = highlighted;
+            }
+          });
+        }
+
+        function getTermParts(term) {
+          return String(term || "")
+            .trim()
+            .toLowerCase()
+            .split(/\s+/)
+            .filter(Boolean);
+        }
+
+        function matchesByParts(text, parts) {
+          if (!parts.length) return true;
+          var low = String(text || "").toLowerCase();
+          for (var i = 0; i < parts.length; i++) {
+            if (low.indexOf(parts[i]) !== -1) return true;
+          }
+          return false;
+        }
+
+        function setScopeButtons(scope) {
+          if (!scopeRoot) return;
+          var buttons = scopeRoot.querySelectorAll(".search-scope-btn");
+          buttons.forEach(function (btn) {
+            var active = btn.getAttribute("data-scope") === scope;
+            btn.classList.toggle("is-active", active);
+            btn.setAttribute("aria-pressed", active ? "true" : "false");
+          });
+        }
+
+        function setSortButtons(sort) {
+          if (!sortRoot) return;
+          var buttons = sortRoot.querySelectorAll(".search-sort-btn");
+          buttons.forEach(function (btn) {
+            var active = btn.getAttribute("data-sort") === sort;
+            btn.classList.toggle("is-active", active);
+            btn.setAttribute("aria-pressed", active ? "true" : "false");
+          });
+        }
+
+        function updateStatus(visibleCount) {
+          if (!scopeStatus) return;
+          var scopeMap = { all: "全部", title: "仅标题", body: "仅正文" };
+          var sortMap = { relevance: "相关度", date_desc: "最新", date_asc: "最旧" };
+          scopeStatus.textContent = "Scope: " + scopeMap[currentScope] + " | Sort: " + sortMap[currentSort] + " | " + visibleCount + " results";
+        }
+
+        function applyScopeFilter(term) {
+          if (!searchRoot) return;
+          var parts = getTermParts(term);
+          var items = getResultItems();
+          var visibleCount = 0;
+
+          items.forEach(function (item) {
+            var link = item.querySelector(".pagefind-ui__result-title .pagefind-ui__result-link");
+            var titleText = link ? (link.dataset.originalTitle || link.textContent || "") : "";
+            var excerpt = item.querySelector(".pagefind-ui__result-excerpt");
+            var bodyText = excerpt ? (excerpt.textContent || "") : "";
+
+            var titleMatch = matchesByParts(titleText, parts);
+            var bodyMatch = matchesByParts(bodyText, parts);
+
+            var keep = true;
+            if (currentScope === "title") keep = titleMatch;
+            if (currentScope === "body") keep = bodyMatch;
+
+            item.style.display = keep ? "" : "none";
+            if (keep) visibleCount++;
+          });
+
+          updateStatus(visibleCount);
+        }
+
+        function bindScopeSwitch() {
+          if (!scopeRoot || scopeRoot.dataset.bound === "1") return;
+          scopeRoot.dataset.bound = "1";
+          var buttons = scopeRoot.querySelectorAll(".search-scope-btn");
+          buttons.forEach(function (btn) {
+            btn.addEventListener("click", function () {
+              var scope = btn.getAttribute("data-scope");
+              if (!isValidScope(scope) || scope === currentScope) return;
+              currentScope = scope;
+              var input = searchRoot ? searchRoot.querySelector(".pagefind-ui__search-input") : null;
+              var term = (input && input.value ? input.value : getUrlTerm()).trim();
+              setScopeButtons(currentScope);
+              setStoredScope(currentScope);
+              setUrlState(term, currentScope, currentSort);
+              schedulePostRender(term);
+            });
+          });
+        }
+
+        function bindSortSwitch() {
+          if (!sortRoot || sortRoot.dataset.bound === "1") return;
+          sortRoot.dataset.bound = "1";
+          var buttons = sortRoot.querySelectorAll(".search-sort-btn");
+          buttons.forEach(function (btn) {
+            btn.addEventListener("click", function () {
+              var sort = btn.getAttribute("data-sort");
+              if (!isValidSort(sort) || sort === currentSort) return;
+              currentSort = sort;
+              var input = searchRoot ? searchRoot.querySelector(".pagefind-ui__search-input") : null;
+              var term = (input && input.value ? input.value : getUrlTerm()).trim();
+              setSortButtons(currentSort);
+              setStoredSort(currentSort);
+              setUrlState(term, currentScope, currentSort);
+              schedulePostRender(term);
+            });
+          });
+        }
+
+        function bindInputSync() {
+          if (!searchRoot) return;
+          var input = searchRoot.querySelector(".pagefind-ui__search-input");
+          if (!input || input.dataset.syncBound === "1") return;
+          input.dataset.syncBound = "1";
+          input.addEventListener("input", function () {
+            var term = (input.value || "").trim();
+            if (syncTimer) clearTimeout(syncTimer);
+            syncTimer = setTimeout(function () {
+              setUrlState(term, currentScope, currentSort);
+              setStoredTerm(term);
+              setStoredScope(currentScope);
+              setStoredSort(currentSort);
+              schedulePostRender(term);
+            }, 80);
+          });
+        }
+
+        function ensureInputReady(onReady, attempt) {
+          var tries = attempt || 0;
+          var input = searchRoot ? searchRoot.querySelector(".pagefind-ui__search-input") : null;
+          if (input) {
+            onReady(input);
+            return;
+          }
+          if (tries > 80) return;
+          setTimeout(function () {
+            ensureInputReady(onReady, tries + 1);
+          }, 25);
+        }
+
+        function schedulePostRender(term) {
+          renderTimers.forEach(function (id) { clearTimeout(id); });
+          renderTimers = [
+            setTimeout(function () {
+              dedupeResults();
+              applySortOrder();
+              applyScopeFilter(term);
+              highlightResultTitles(term);
+            }, 80),
+            setTimeout(function () {
+              dedupeResults();
+              applySortOrder();
+              applyScopeFilter(term);
+              highlightResultTitles(term);
+            }, 220),
+            setTimeout(function () {
+              dedupeResults();
+              applySortOrder();
+              applyScopeFilter(term);
+              highlightResultTitles(term);
+            }, 480)
+          ];
+        }
+
+        function restoreSearchState() {
+          var term = getUrlTerm() || getStoredTerm();
+          currentScope = getUrlScope() || getStoredScope() || "all";
+          currentSort = getUrlSort() || getStoredSort() || "relevance";
+          ensureInputReady(function (input) {
+            bindScopeSwitch();
+            bindSortSwitch();
+            bindInputSync();
+            setScopeButtons(currentScope);
+            setSortButtons(currentSort);
+
+            if (!term) {
+              schedulePostRender("");
+              return;
+            }
+
+            if ((input.value || "").trim() !== term) {
+              input.value = term;
+            }
+
+            searchUI.triggerSearch(term);
+            setUrlState(term, currentScope, currentSort);
+            setStoredTerm(term);
+            setStoredScope(currentScope);
+            setStoredSort(currentSort);
+            schedulePostRender(term);
+          });
+        }
+
+        ensureInputReady(function (input) {
+          currentScope = getUrlScope() || getStoredScope() || "all";
+          currentSort = getUrlSort() || getStoredSort() || "relevance";
+
+          bindScopeSwitch();
+          bindSortSwitch();
+          bindInputSync();
+          setScopeButtons(currentScope);
+          setSortButtons(currentSort);
+
+          var initialTerm = getUrlTerm() || getStoredTerm();
+          if (initialTerm && (input.value || "").trim() !== initialTerm) {
+            input.value = initialTerm;
+          }
+
+          if (initialTerm) {
+            searchUI.triggerSearch(initialTerm);
+            setUrlState(initialTerm, currentScope, currentSort);
+            setStoredTerm(initialTerm);
+            setStoredScope(currentScope);
+            setStoredSort(currentSort);
+          }
+
+          schedulePostRender(initialTerm);
+        });
+
+        window.addEventListener("pageshow", function () {
+          restoreSearchState();
+        });
+
+        window.addEventListener("popstate", function () {
+          restoreSearchState();
+        });
       });
     </script>
   </body>
 </html>
-

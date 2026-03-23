@@ -44,13 +44,14 @@
         } catch (e) {}
       })();
     </script>
+    <% const _isSearchIndexable = !((typeof draft !== 'undefined' && draft === true) || (typeof published !== 'undefined' && published === false)); %>
     <div class="main">
       <a class="skip-link" href="#main-content">跳到正文</a>
-      <div class="main-content" id="main-content" data-pagefind-body>
+      <div class="main-content" id="main-content" <%- _isSearchIndexable ? '' : 'data-pagefind-ignore="all"' %>>
         <%- include('../partials/header') %>
         <div class="post-detail">
           <article class="post">
-            <h2 class="post-title">
+            <h2 class="post-title" data-pagefind-meta="title">
               <%= title %>
             </h2>
             <div class="post-info">
@@ -69,7 +70,7 @@
               <img class="post-feature-image" src="<%= _feature %>" alt="<%= title %>">
             <% } %>
               <div class="post-content-wrapper">
-              <div class="post-content" v-pre>
+              <div class="post-content" v-pre <%- _isSearchIndexable ? 'data-pagefind-body' : '' %>>
                 <%- content %>
               </div>
               <% if (theme.customConfig.openPostToc) { %>
@@ -102,7 +103,7 @@
             </div>
           </article>
 
-          <div class="post-meta-footer" style="font-size: 0.9em; line-height: 1.6; margin-top: 2rem; border-top: 1px dashed #ccc; padding-top: 1rem;">
+          <div class="post-meta-footer" data-pagefind-ignore="all" style="font-size: 0.9em; line-height: 1.6; margin-top: 2rem; border-top: 1px dashed var(--meta-footer-border); padding-top: 1rem;">
             <p style="margin: 4px 0;">
               <% const _authorName = (typeof author !== 'undefined' && author) ? author : (site.author || site.siteName); %>
               <strong>本文作者：</strong><%= _authorName %>
@@ -146,7 +147,7 @@
             const _nextPost = _idx > 0 ? _allPosts[_idx - 1] : null;
           %>
           <% if (_prevPost || _nextPost) { %>
-          <div class="post-nav">
+          <div class="post-nav" data-pagefind-ignore="all">
             <div class="post-nav-col">
               <% if (_prevPost) { %>
               <a href="<%= (basePath || '') + _prevPost.url %>" class="post-nav-item post-nav-prev">
@@ -327,4 +328,3 @@
     <% } %>
   </body>
 </html>
-

@@ -532,7 +532,7 @@ body, div, a, p, ul, li, ol, h1, h2, h3, h4, h5, h6, table, tr, td {
 }
 .post-detail .post .post-content p {
   line-height: 1.62;
-  margin-bottom: 1.12em;
+  margin-bottom: 0;
   font-size: 16px;
   letter-spacing: 0.05em;
   hyphens: auto;
@@ -752,6 +752,173 @@ body[data-theme='dark'] .post-detail .post .post-content hr {
   top: 4px;
   left: 4px;
   transition: all 0.2s ease;
+}
+
+/* ========================================================================
+   Search (Pagefind) - theme aligned
+   ======================================================================== */
+
+#search .pagefind-ui {
+  --pagefind-ui-scale: 0.74;
+  --pagefind-ui-primary: var(--link-color);
+  --pagefind-ui-text: var(--text-color);
+  --pagefind-ui-background: var(--search-ui-bg);
+  --pagefind-ui-border: var(--search-ui-border);
+  --pagefind-ui-tag: var(--search-ui-tag);
+  --pagefind-ui-border-width: 1px;
+  --pagefind-ui-border-radius: 10px;
+  --pagefind-ui-image-border-radius: 10px;
+  --pagefind-ui-font: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.search-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 12px;
+}
+
+.search-scope,
+.search-sort {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.search-scope-btn,
+.search-sort-btn {
+  border: 2px solid #d80000;
+  border-radius: 999px;
+  background: var(--content-bg);
+  color: var(--text-color);
+  padding: 3px 12px;
+  font-size: 1.4rem;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-scope-btn:hover,
+.search-sort-btn:hover {
+  background: rgba(216, 0, 0, 0.12);
+}
+
+.search-scope-btn.is-active,
+.search-sort-btn.is-active {
+  background: #d80000;
+  color: #fff;
+}
+
+.search-scope-btn:focus-visible,
+.search-sort-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(216, 0, 0, 0.22);
+}
+
+.search-scope-status {
+  margin-left: 4px;
+  color: var(--muted-text);
+  font-size: 1.3rem;
+}
+
+#search .pagefind-ui__search-input {
+  border: 2px solid #d80000;
+  background: var(--content-bg);
+  color: var(--text-color);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+#search .pagefind-ui__search-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(216, 0, 0, 0.22);
+}
+
+#search .pagefind-ui__search-input::placeholder {
+  color: var(--muted-text);
+  opacity: 0.72;
+}
+
+#search .pagefind-ui__search-clear {
+  color: var(--muted-text);
+}
+
+#search .pagefind-ui__message {
+  color: var(--muted-text);
+  font-weight: 500;
+}
+
+#search .pagefind-ui__results {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#search .pagefind-ui__result {
+  margin: 0;
+  padding: 14px 16px;
+  border: 2px solid #d80000;
+  border-radius: var(--post-border-radius, 10px);
+  background: var(--content-bg);
+  gap: 0;
+}
+
+#search .pagefind-ui__result:last-of-type {
+  border-bottom: 2px solid #d80000;
+}
+
+#search .pagefind-ui__result-inner {
+  margin-top: 0;
+}
+
+#search .pagefind-ui__result-title .pagefind-ui__result-link {
+  color: var(--text-color);
+}
+
+#search .pagefind-ui__result-title {
+  font-size: 1.9rem;
+  line-height: 1.35;
+  font-weight: 700;
+}
+
+#search .pagefind-ui__result-title .pagefind-ui__result-link:hover,
+#search .pagefind-ui__result-nested .pagefind-ui__result-link {
+  color: var(--link-color);
+}
+
+#search .pagefind-ui__result-excerpt {
+  color: var(--muted-text);
+  line-height: 1.5;
+  margin-top: 6px;
+}
+
+#search .pagefind-ui mark {
+  color: inherit;
+  background: var(--search-mark-bg);
+  border-radius: 4px;
+  padding: 0 0.16em;
+}
+
+#search .pagefind-ui__button:hover {
+  background: var(--search-ui-tag);
+  border-color: var(--link-color);
+}
+
+@media (max-width: 600px) {
+  #search .pagefind-ui {
+    --pagefind-ui-scale: 0.68;
+  }
+
+  .search-scope-status {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  #search .pagefind-ui__result {
+    padding: 12px 12px;
+  }
 }
 
 /* Next Post (original Nic style) */
@@ -1123,13 +1290,11 @@ body[data-theme='light'] .hljs-addition {
 .post-meta-footer {
   padding: 18px 22px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.96);
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: var(--meta-footer-bg);
+  border: 1px solid var(--meta-footer-border);
   font-size: 1.6rem;
   color: var(--muted-text);
-  box-shadow:
-    0 1px 2px rgba(15, 23, 42, 0.1),
-    0 1px 3px rgba(15, 23, 42, 0.08);
+  box-shadow: var(--meta-footer-shadow);
 }
 .post-meta-footer a {
   color: var(--link-color);
@@ -1142,14 +1307,6 @@ body[data-theme='light'] .hljs-addition {
 }
 .post-meta-footer-line + .post-meta-footer-line {
   margin-top: 6px;
-}
-
-body[data-theme='dark'] .post-meta-footer {
-  background: rgba(15, 23, 42, 0.9);
-  border-color: rgba(148, 163, 184, 0.28);
-  box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.6),
-    0 0 0 1px rgba(148, 163, 184, 0.08);
 }
 
 /* ========================================================================

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "eleventy --serve --config=eleventy.config.cjs",
-    "build": "cross-env ELEVENTY_ENV=production eleventy --config=eleventy.config.cjs",
+    "build": "node scripts/prebuild-clean.cjs && cross-env ELEVENTY_ENV=production eleventy --config=eleventy.config.cjs",
     "postbuild": "node scripts/postbuild.cjs"
   },
   "dependencies": {

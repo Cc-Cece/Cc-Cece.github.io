@@ -15,7 +15,7 @@
     </script>
     <div class="main">
       <a class="skip-link" href="#main-content">跳到正文</a>
-      <div class="main-content" id="main-content" data-pagefind-body>
+      <div class="main-content" id="main-content" data-pagefind-ignore="all">
         <%- include('../partials/header') %>
 
         <% const list = (typeof pagination !== 'undefined' && pagination && pagination.items) ? pagination.items : (Array.isArray(posts) ? posts : (collections && Array.isArray(collections.posts) ? collections.posts : [])); %>

@@ -15,9 +15,9 @@
     </script>
     <div class="main">
       <a class="skip-link" href="#main-content">跳到正文</a>
-      <div class="main-content" id="main-content" data-pagefind-body>
+      <div class="main-content" id="main-content" data-pagefind-ignore="all">
         <%- include('../partials/header') %>
-        <div class="archives-container">
+        <div class="archives-container" data-pagefind-ignore="all">
           <%
             const _archivePosts = collections.posts || [];
             const _years = [...new Set(_archivePosts.map(p => {
