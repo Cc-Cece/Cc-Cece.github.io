@@ -9,6 +9,16 @@ hideInList: true
 feature: 
 isTop: false
 ---
+
+<div
+  data-presence-widget
+  data-api="https://status.akihito.dpdns.org/v1/status"
+  data-parts="device:pc,device:phone,steam"
+  data-style="card"
+  data-refresh-ms="30000">
+</div>
+
+
 <div style="display: flex; align-items: center; background-color: #333; padding: 20px;">
   <img src="https://nmsr.nickac.dev/body_bust/ceceport?mode=body_bust&chestplate=ne" alt="头像" style="width: 50%; height: auto;">
   <div style="font-family: sans-serif; color: #fff;">
@@ -18,3 +28,4 @@ isTop: false
     <p>For help, visit Discord or email.</p>
   </div>
 </div>
+

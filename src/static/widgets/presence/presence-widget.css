@@ -1,0 +1,331 @@
+﻿.presence-widget {
+  --presence-accent: #d80000;
+  --presence-border: rgba(162, 54, 54, 0.34);
+  --presence-bg: var(--content-bg, #ffffff);
+  --presence-bg-soft: color-mix(in srgb, var(--presence-bg) 90%, var(--presence-accent) 10%);
+  --presence-text: var(--text-color, rgba(0, 0, 0, 0.86));
+  --presence-muted: color-mix(in srgb, var(--presence-text) 58%, transparent 42%);
+  --presence-online: #22c55e;
+  --presence-recent: #f59e0b;
+  --presence-offline: #6b7280;
+  --presence-badge-bg: rgba(216, 0, 0, 0.08);
+  --presence-badge-border: rgba(162, 54, 54, 0.28);
+  --presence-divider: color-mix(in srgb, var(--presence-text) 12%, transparent 88%);
+  --presence-shadow: 0 10px 24px rgba(8, 12, 20, 0.08);
+
+  border: 1px solid var(--presence-border);
+  border-radius: 14px;
+  background: linear-gradient(180deg, var(--presence-bg-soft), var(--presence-bg));
+  color: var(--presence-text);
+  padding: 14px 16px;
+  margin: 14px 0;
+  font-size: 14px;
+  line-height: 1.45;
+  box-shadow: var(--presence-shadow);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.presence-widget[hidden] {
+  display: none !important;
+}
+
+.presence-widget:hover {
+  border-color: color-mix(in srgb, var(--presence-border) 76%, var(--presence-accent) 24%);
+  box-shadow: 0 14px 30px rgba(8, 12, 20, 0.12);
+}
+
+.presence-widget__section + .presence-widget__section {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--presence-divider);
+}
+
+.presence-widget__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.presence-widget__muted {
+  color: var(--presence-muted);
+}
+
+.presence-widget__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.presence-widget__dot[data-state="online"] {
+  background: var(--presence-online);
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.55);
+  animation: presence-pulse 2.2s ease-out infinite;
+}
+
+.presence-widget__dot[data-state="recently_online"] {
+  background: var(--presence-recent);
+}
+
+.presence-widget__dot[data-state="offline"] {
+  background: var(--presence-offline);
+}
+
+.presence-widget__state {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.presence-widget__device-main {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.presence-widget__device-label {
+  font-weight: 600;
+}
+
+.presence-widget__device-kind {
+  display: inline-block;
+  border-radius: 999px;
+  border: 1px solid var(--presence-badge-border);
+  background: var(--presence-badge-bg);
+  padding: 1px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.presence-widget__chips {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.presence-widget__chip {
+  border-radius: 999px;
+  border: 1px solid var(--presence-badge-border);
+  background: var(--presence-badge-bg);
+  padding: 2px 9px;
+  font-size: 12px;
+}
+
+.presence-widget__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.presence-widget__list-item + .presence-widget__list-item {
+  margin-top: 8px;
+}
+
+.presence-widget__list-item {
+  border: 1px solid color-mix(in srgb, var(--presence-divider) 78%, transparent 22%);
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: color-mix(in srgb, var(--presence-bg) 92%, var(--presence-accent) 8%);
+}
+
+.presence-widget__app {
+  margin-top: 4px;
+  margin-left: 18px;
+}
+
+.presence-widget__right {
+  text-align: right;
+  color: var(--presence-muted);
+  margin-left: 10px;
+  flex-shrink: 0;
+  font-size: 12px;
+}
+
+.presence-widget__title {
+  font-weight: 700;
+}
+
+.presence-widget__service {
+  letter-spacing: 0.01em;
+}
+
+.presence-widget__service-card {
+  border: 1px solid color-mix(in srgb, var(--presence-divider) 76%, transparent 24%);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: color-mix(in srgb, var(--presence-bg) 93%, var(--presence-accent) 7%);
+}
+
+.presence-widget__service-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.presence-widget__service-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 2px 9px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border: 1px solid var(--presence-badge-border);
+  background: var(--presence-badge-bg);
+  color: var(--presence-muted);
+}
+
+.presence-widget__service-meta {
+  margin-top: 6px;
+  color: var(--presence-muted);
+  font-size: 13px;
+}
+
+.presence-widget__service-actions {
+  margin-top: 8px;
+}
+
+.presence-widget__service-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: 1px solid var(--presence-badge-border);
+  background: var(--presence-badge-bg);
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.presence-widget__service-card[data-service-state="in_game"] .presence-widget__service-badge {
+  color: #166534;
+  border-color: rgba(34, 197, 94, 0.45);
+  background: rgba(34, 197, 94, 0.16);
+}
+
+.presence-widget__service-card[data-service-state="online"] .presence-widget__service-badge {
+  color: #1d4ed8;
+  border-color: rgba(59, 130, 246, 0.42);
+  background: rgba(59, 130, 246, 0.16);
+}
+
+.presence-widget a {
+  color: var(--link-color, rgb(162, 54, 54));
+  text-decoration: none;
+}
+
+.presence-widget a:hover {
+  color: var(--link-hover-color, #a23636);
+  text-decoration: underline;
+}
+
+.presence-widget__empty {
+  color: var(--presence-muted);
+}
+
+.presence-widget--compact {
+  padding: 10px 12px;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(8, 12, 20, 0.08);
+}
+
+.presence-widget--compact .presence-widget__section + .presence-widget__section {
+  margin-top: 8px;
+  padding-top: 8px;
+}
+
+.presence-widget--compact .presence-widget__list-item {
+  border-radius: 8px;
+  padding: 6px 8px;
+}
+
+.presence-widget--compact .presence-widget__service-card {
+  padding: 8px 10px;
+}
+
+.presence-widget--minimal .presence-widget__service-card {
+  border: 0;
+  border-radius: 0;
+  padding: 2px 0;
+  background: transparent;
+}
+
+.presence-widget--minimal {
+  border: 0;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.presence-widget--minimal:hover {
+  border: 0;
+  box-shadow: none;
+}
+
+.presence-widget--minimal .presence-widget__section + .presence-widget__section {
+  border-top: 0;
+  margin-top: 8px;
+  padding-top: 0;
+}
+
+.presence-widget--minimal .presence-widget__list-item {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 2px 0;
+}
+
+body[data-theme='light'] .presence-widget {
+  --presence-border: rgba(162, 54, 54, 0.28);
+  --presence-bg: var(--content-bg, #ffffff);
+  --presence-text: var(--text-color, #212529);
+  --presence-badge-bg: rgba(216, 0, 0, 0.08);
+  --presence-badge-border: rgba(162, 54, 54, 0.32);
+  --presence-shadow: 0 10px 24px rgba(8, 12, 20, 0.08);
+}
+
+body[data-theme='dark'] .presence-widget {
+  --presence-border: rgba(162, 54, 54, 0.5);
+  --presence-bg: var(--content-bg, #121212);
+  --presence-bg-soft: color-mix(in srgb, var(--presence-bg) 90%, #2a0a0a 10%);
+  --presence-text: var(--text-color, #f1f3f5);
+  --presence-badge-bg: rgba(216, 0, 0, 0.15);
+  --presence-badge-border: rgba(162, 54, 54, 0.48);
+  --presence-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+}
+
+@keyframes presence-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.48); }
+  70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+@media (max-width: 520px) {
+  .presence-widget {
+    padding: 12px 12px;
+  }
+
+  .presence-widget__row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .presence-widget__right {
+    text-align: left;
+    margin-left: 0;
+  }
+
+  .presence-widget__app {
+    margin-left: 0;
+  }
+}

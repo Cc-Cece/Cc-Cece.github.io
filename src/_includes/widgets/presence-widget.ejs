@@ -1,0 +1,26 @@
+<%
+  const widgetId = (typeof id === "string" && id) ? id : "";
+  const widgetApi = (typeof api === "string" && api)
+    ? api
+    : ((theme && theme.customConfig && theme.customConfig.presenceApi) ? theme.customConfig.presenceApi : "");
+  const widgetParts = Array.isArray(parts)
+    ? parts.join(",")
+    : ((typeof parts === "string" && parts) ? parts : "overall,devices,spotify,steam,dnd,message");
+  const widgetRefreshMsRaw = (typeof refreshMs !== "undefined")
+    ? Number(refreshMs)
+    : Number((theme && theme.customConfig && theme.customConfig.presenceRefreshMs) || 30000);
+  const widgetRefreshMs = Number.isFinite(widgetRefreshMsRaw) ? widgetRefreshMsRaw : 30000;
+  const widgetShowEmpty = (typeof showEmpty === "boolean") ? showEmpty : false;
+  const widgetStyle = (typeof style === "string" && style.trim()) ? style.trim().toLowerCase() : "card";
+%>
+<div
+  class="presence-widget"
+  <% if (widgetId) { %>id="<%= widgetId %>"<% } %>
+  data-presence-widget
+  data-api="<%= widgetApi %>"
+  data-parts="<%= widgetParts %>"
+  data-refresh-ms="<%= widgetRefreshMs %>"
+  data-show-empty="<%= widgetShowEmpty ? 'true' : 'false' %>"
+  data-style="<%= widgetStyle %>"
+  aria-live="polite"
+></div>
