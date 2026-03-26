@@ -97,11 +97,40 @@
     return "<span class=\"presence-widget__dot\" data-state=\"" + escapeHtml(state) + "\"></span>";
   }
 
-  function formatLastSeen(value) {
+  function formatRelativeLastSeen(value) {
     if (!value) return "";
     var date = new Date(value);
     if (!Number.isFinite(date.getTime())) return "";
-    return date.toLocaleString();
+    var diffMs = Date.now() - date.getTime();
+    if (!Number.isFinite(diffMs) || diffMs < 0) return "";
+
+    var totalMinutes = Math.floor(diffMs / 60000);
+    var totalHours = Math.floor(diffMs / 3600000);
+    var totalDays = Math.floor(diffMs / 86400000);
+
+    if (totalDays >= 1) {
+      var dayHours = totalHours % 24;
+      return totalDays + "天" + dayHours + "小时前";
+    }
+
+    if (totalHours >= 1) {
+      var hourMinutes = totalMinutes % 60;
+      return totalHours + "小时" + hourMinutes + "分钟前";
+    }
+
+    var minutes = Math.max(1, totalMinutes);
+    return minutes + "分钟前";
+  }
+
+  function formatDeviceApp(device) {
+    if (!device || !device.app || !device.app.name) return "";
+    var rawName = String(device.app.name).trim();
+    if (!rawName) return "";
+    if (String(device.kind).toLowerCase() === "pc") {
+      rawName = rawName.replace(/\.exe$/i, "");
+      return "正在进行" + rawName;
+    }
+    return rawName;
   }
 
   function renderOverallSection(overallState) {
@@ -146,15 +175,19 @@
   function renderDeviceRows(devices) {
     return devices.map(function (device) {
       var appText = "";
-      if (device.app && device.app.name) {
-        appText = "<div class=\"presence-widget__muted presence-widget__app\">" + escapeHtml(device.app.name) + "</div>";
+      var appLabel = formatDeviceApp(device);
+      if (appLabel) {
+        appText = "<div class=\"presence-widget__muted presence-widget__app\">" + escapeHtml(appLabel) + "</div>";
       }
 
       var title = escapeHtml(device.label || device.id || device.kind || "Device");
       var kind = escapeHtml((device.kind || "device").toUpperCase());
       var right = [];
       right.push(toDisplayState(device.state));
-      if (device.lastSeen) right.push(formatLastSeen(device.lastSeen));
+      if (device.state !== "online" && device.lastSeen) {
+        var relative = formatRelativeLastSeen(device.lastSeen);
+        if (relative) right.push(relative);
+      }
 
       return [
         "<li class=\"presence-widget__list-item\">",
