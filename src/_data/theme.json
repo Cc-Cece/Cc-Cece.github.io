@@ -21,7 +21,7 @@
     "twikooEnvId": "https://ceceport.netlify.app/.netlify/functions/twikoo",
     "twikooRegion": "",
     "presenceApi": "https://status.akihito.dpdns.org/v1/status",
-    "presenceRefreshMs": 30000,
+    "presenceRefreshMs": 60000,
     "pageBgColor": "#ffffff",
     "qq": "https://github.com/Cc-Cece",
     "siteFont": "-apple-system,BlinkMacSystemFont,'Helvetica Neue','PingFang SC','Hiragino Sans GB','Droid Sans Fallback','Microsoft YaHei',sans-serif",
