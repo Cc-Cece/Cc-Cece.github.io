@@ -1,0 +1,46 @@
+---
+permalink: "/sparks/"
+eleventyExcludeFromCollections: true
+---
+<html lang="zh-CN">
+  <head>
+    <%- include('_includes/partials/head', { siteTitle: 'Sparks | ' + site.siteName, description: theme.customConfig.metaDescription || theme.siteDescription, site, theme, page, basePath }) %>
+  </head>
+  <body>
+    <script>
+      (function() {
+        try {
+          var stored = localStorage.getItem('theme');
+          if (stored === 'light' || stored === 'dark') {
+            document.body.setAttribute('data-theme', stored);
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <div class="main">
+      <a class="skip-link" href="#main-content">跳到正文</a>
+      <div class="main-content" id="main-content">
+        <%- include('_includes/partials/header') %>
+        <main class="sparks-container">
+          <h2 class="sparks-title">Sparks</h2>
+          <div class="sparks-list">
+            <% const sparkList = collections.sparks || []; %>
+            <% if (sparkList.length) { %>
+              <% sparkList.forEach(function(spark) { %>
+                <article class="spark-item">
+                  <time class="spark-time" datetime="<%= spark.date.toISOString() %>">
+                    <%= spark.date.toISOString().slice(0, 10) %>
+                  </time>
+                  <div class="spark-content"><%= spark.data.spark || '' %></div>
+                </article>
+              <% }); %>
+            <% } else { %>
+              <p class="sparks-empty">No sparks yet.</p>
+            <% } %>
+          </div>
+        </main>
+        <%- include('_includes/partials/footer') %>
+      </div>
+    </div>
+  </body>
+</html>

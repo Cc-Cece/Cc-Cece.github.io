@@ -28,6 +28,18 @@ module.exports = function (eleventyConfig) {
     return true;
   }
 
+  function shouldIncludeSparkInLists(spark) {
+    if (!isProduction) return true;
+    if (spark.data.draft === true) return false;
+    if (spark.data.published === false) return false;
+
+    const expires = spark.data.expires;
+    if (!expires) return true;
+    const expiresAt = expires instanceof Date ? expires : new Date(expires);
+    if (Number.isNaN(expiresAt.getTime())) return true;
+    return expiresAt > new Date();
+  }
+
   function withPathPrefix(urlPath) {
     if (!urlPath) return urlPath;
     if (/^[a-z][a-z0-9+.-]*:\/\//i.test(urlPath) || urlPath.startsWith("//")) return urlPath;
@@ -117,6 +129,12 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addCollection("postsChrono", function (collectionApi) {
     return collectionApi.getFilteredByGlob("src/posts/*.md")
       .filter(shouldIncludePostInLists)
+      .sort((a, b) => b.date - a.date);
+  });
+
+  eleventyConfig.addCollection("sparks", function (collectionApi) {
+    return collectionApi.getFilteredByGlob("src/sparks/*.md")
+      .filter(shouldIncludeSparkInLists)
       .sort((a, b) => b.date - a.date);
   });
 

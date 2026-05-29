@@ -10,6 +10,11 @@
     "openType": "Internal"
   },
   {
+    "link": "/sparks/",
+    "name": "Sparks",
+    "openType": "Internal"
+  },
+  {
     "link": "/post/about",
     "name": "About",
     "openType": "Internal"

@@ -1031,6 +1031,61 @@ body[data-theme='dark'] .post-detail .post .post-content hr {
 }
 
 /* ========================================================================
+   Sparks
+   ======================================================================== */
+
+.sparks-container {
+  flex: 1;
+  padding: 24px 32px 8px;
+}
+.sparks-title {
+  margin: 0 0 20px;
+  font-size: 2.2rem;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+.sparks-list {
+  display: flex;
+  flex-direction: column;
+}
+.spark-item {
+  padding: 20px 0;
+  border-top: 1px solid rgba(162, 54, 54, 0.28);
+}
+.spark-item:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+.spark-time {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--muted-text);
+  font-size: 1.3rem;
+}
+.spark-content {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: var(--text-color);
+  font-size: 1.7rem;
+  line-height: 1.7;
+  letter-spacing: 0;
+}
+.sparks-empty {
+  margin: 0;
+  padding: 24px 0;
+  color: var(--muted-text);
+  font-size: 1.6rem;
+}
+@media (max-width: 600px) {
+  .sparks-container {
+    padding: 16px;
+  }
+  .spark-content {
+    font-size: 1.6rem;
+  }
+}
+
+/* ========================================================================
    Tags (Nic)
    ======================================================================== */
 
