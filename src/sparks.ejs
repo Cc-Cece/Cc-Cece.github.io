@@ -24,14 +24,27 @@ eleventyExcludeFromCollections: true
         <main class="sparks-container">
           <h2 class="sparks-title">Sparks</h2>
           <div class="sparks-list">
-            <% const sparkList = collections.sparks || []; %>
+            <%
+              const sparkList = collections.sparks || [];
+              const escapeSparkHtml = function(value) {
+                return String(value || '')
+                  .replace(/&/g, '&amp;')
+                  .replace(/</g, '&lt;')
+                  .replace(/>/g, '&gt;')
+                  .replace(/"/g, '&quot;')
+                  .replace(/'/g, '&#39;');
+              };
+              const renderSpark = function(value) {
+                return escapeSparkHtml(value).replace(/\n/g, '<br>');
+              };
+            %>
             <% if (sparkList.length) { %>
               <% sparkList.forEach(function(spark) { %>
                 <article class="spark-item">
                   <time class="spark-time" datetime="<%= spark.date.toISOString() %>">
                     <%= spark.date.toISOString().slice(0, 10) %>
                   </time>
-                  <div class="spark-content"><%= spark.data.spark || '' %></div>
+                  <div class="spark-content"><%- renderSpark(spark.data.spark) %></div>
                 </article>
               <% }); %>
             <% } else { %>
