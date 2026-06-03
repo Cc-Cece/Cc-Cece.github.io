@@ -40,6 +40,13 @@ module.exports = function (eleventyConfig) {
     return expiresAt > new Date();
   }
 
+  function shouldIncludeJokeInLists(joke) {
+    if (!isProduction) return true;
+    if (joke.data.draft === true) return false;
+    if (joke.data.published === false) return false;
+    return true;
+  }
+
   function withPathPrefix(urlPath) {
     if (!urlPath) return urlPath;
     if (/^[a-z][a-z0-9+.-]*:\/\//i.test(urlPath) || urlPath.startsWith("//")) return urlPath;
@@ -135,6 +142,12 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addCollection("sparks", function (collectionApi) {
     return collectionApi.getFilteredByGlob("src/sparks/*.md")
       .filter(shouldIncludeSparkInLists)
+      .sort((a, b) => b.date - a.date);
+  });
+
+  eleventyConfig.addCollection("jokes", function (collectionApi) {
+    return collectionApi.getFilteredByGlob("src/jokes/*.md")
+      .filter(shouldIncludeJokeInLists)
       .sort((a, b) => b.date - a.date);
   });
 

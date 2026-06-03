@@ -1,0 +1,92 @@
+---
+permalink: "/jokes/"
+eleventyExcludeFromCollections: true
+---
+<html lang="zh-CN">
+  <head>
+    <%- include('_includes/partials/head', { siteTitle: 'Jokes | ' + site.siteName, description: theme.customConfig.metaDescription || theme.siteDescription, site, theme, page, basePath }) %>
+  </head>
+  <body>
+    <script>
+      (function() {
+        try {
+          var stored = localStorage.getItem('theme');
+          if (stored === 'light' || stored === 'dark') {
+            document.body.setAttribute('data-theme', stored);
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <div class="main">
+      <a class="skip-link" href="#main-content">跳到正文</a>
+      <div class="main-content" id="main-content">
+        <%- include('_includes/partials/header') %>
+        <main class="sparks-container jokes-container">
+          <h2 class="sparks-title">Jokes</h2>
+          <div class="sparks-list">
+            <%
+              const jokeList = collections.jokes || [];
+              const escapeJokeHtml = function(value) {
+                return String(value || '')
+                  .replace(/&/g, '&amp;')
+                  .replace(/</g, '&lt;')
+                  .replace(/>/g, '&gt;')
+                  .replace(/"/g, '&quot;')
+                  .replace(/'/g, '&#39;');
+              };
+              const renderJoke = function(value) {
+                return escapeJokeHtml(value).replace(/\n/g, '<br>');
+              };
+            %>
+            <% if (jokeList.length) { %>
+              <% jokeList.forEach(function(joke, index) { %>
+                <article class="spark-item joke-item">
+                  <time class="spark-time" datetime="<%= joke.date.toISOString() %>">
+                    <%= joke.date.toISOString().slice(0, 10) %>
+                  </time>
+                  <div class="spark-content"><%- renderJoke(joke.data.joke) %></div>
+                  <% if (joke.data.reveal) { %>
+                    <% const revealId = 'joke-reveal-' + index; %>
+                    <button
+                      class="joke-reveal-toggle"
+                      type="button"
+                      data-joke-toggle
+                      data-target="<%= revealId %>"
+                      aria-expanded="false"
+                      aria-controls="<%= revealId %>">
+                      Show punchline
+                    </button>
+                    <div class="joke-reveal" id="<%= revealId %>" hidden>
+                      <div class="joke-reveal-label">Punchline</div>
+                      <div class="spark-content joke-reveal-content"><%- renderJoke(joke.data.reveal) %></div>
+                    </div>
+                  <% } %>
+                </article>
+              <% }); %>
+            <% } else { %>
+              <p class="sparks-empty">No jokes yet.</p>
+            <% } %>
+          </div>
+        </main>
+        <%- include('_includes/partials/footer') %>
+      </div>
+    </div>
+    <script>
+      (function() {
+        var toggles = document.querySelectorAll('[data-joke-toggle]');
+        toggles.forEach(function(toggle) {
+          toggle.addEventListener('click', function() {
+            var targetId = toggle.getAttribute('data-target');
+            var reveal = document.getElementById(targetId);
+            if (!reveal) return;
+
+            var isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+            toggle.setAttribute('aria-expanded', String(!isExpanded));
+            toggle.textContent = isExpanded ? 'Show punchline' : 'Hide punchline';
+            reveal.hidden = isExpanded;
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>

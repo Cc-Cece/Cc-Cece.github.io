@@ -20,6 +20,10 @@ eleventyExcludeFromCollections: true
     <loc><%= _base %><%= _path %>/sparks/</loc>
     <lastmod><%= new Date().toISOString().slice(0, 10) %></lastmod>
   </url>
+  <url>
+    <loc><%= _base %><%= _path %>/jokes/</loc>
+    <lastmod><%= new Date().toISOString().slice(0, 10) %></lastmod>
+  </url>
   <% (collections.postsChrono || collections.posts || []).forEach(function(post) { %>
   <url>
     <loc><%= _base %><%= _path %><%= post.url %></loc>

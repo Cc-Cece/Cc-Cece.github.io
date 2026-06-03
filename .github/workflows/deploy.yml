@@ -27,8 +27,20 @@ on:
         description: "Optional spark shared secret"
         required: false
         type: string
+      joke:
+        description: "Optional joke setup"
+        required: false
+        type: string
+      reveal:
+        description: "Optional joke punchline"
+        required: false
+        type: string
+      joke_secret:
+        description: "Optional joke shared secret"
+        required: false
+        type: string
   repository_dispatch:
-    types: ["new-spark"]
+    types: ["new-spark", "new-joke"]
   schedule:
     - cron: "0 18 * * *"
 
@@ -71,6 +83,23 @@ jobs:
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add src/sparks
             git commit -m "Add spark"
+            git push
+          fi
+
+      - name: Create joke
+        if: github.event_name == 'repository_dispatch' || (github.event_name == 'workflow_dispatch' && inputs.joke != '')
+        env:
+          JOKE_SECRET: ${{ secrets.JOKE_SECRET }}
+        run: node scripts/create-joke.cjs
+
+      - name: Commit joke
+        if: github.event_name == 'repository_dispatch' || (github.event_name == 'workflow_dispatch' && inputs.joke != '')
+        run: |
+          if [ -n "$(git status --porcelain src/jokes)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add src/jokes
+            git commit -m "Add joke"
             git push
           fi
 
