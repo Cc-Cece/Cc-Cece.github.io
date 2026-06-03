@@ -41,9 +41,6 @@ eleventyExcludeFromCollections: true
             <% if (jokeList.length) { %>
               <% jokeList.forEach(function(joke, index) { %>
                 <article class="spark-item joke-item">
-                  <time class="spark-time" datetime="<%= joke.date.toISOString() %>">
-                    <%= joke.date.toISOString().slice(0, 10) %>
-                  </time>
                   <div class="spark-content"><%- renderJoke(joke.data.joke) %></div>
                   <% if (joke.data.reveal) { %>
                     <% const revealId = 'joke-reveal-' + index; %>
