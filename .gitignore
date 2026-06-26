@@ -31,3 +31,5 @@ tools-admin/
 test/
 
 presence-system/
+
+src/posts/.*.md
